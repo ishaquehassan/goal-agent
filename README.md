@@ -188,7 +188,7 @@ Remove-Item -Force "$env:USERPROFILE\.claude\agents\goal-researcher.md","$env:US
 
 | Requirement | Needed For | Install |
 |-------------|-----------|---------|
-| [Claude Code](https://claude.com/download) | Everything | `npm i -g @anthropic-ai/claude-code` |
+| [Claude Code](https://claude.ai/code) | Everything | `npm i -g @anthropic-ai/claude-code` |
 | [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) | Profile optimization, publishing, engagement | Chrome Web Store |
 | LinkedIn account | Networking, engagement | Log in via browser |
 | GitHub account | OSS goals, profile optimization | `gh` CLI recommended |
@@ -198,7 +198,7 @@ Remove-Item -Force "$env:USERPROFILE\.claude\agents\goal-researcher.md","$env:US
 
 ## Built With
 
-- [Claude Code](https://claude.com/download) by Anthropic
+- [Claude Code](https://claude.ai/code) by Anthropic
 - Claude Code Skills/Plugin system
 - MCP (Model Context Protocol) for browser automation
 

@@ -13,7 +13,7 @@ if (-not $claudePath) {
     Write-Host ""
     Write-Host "Install Claude Code first:"
     Write-Host "  npm install -g @anthropic-ai/claude-code"
-    Write-Host "  Or visit: https://claude.com/download"
+    Write-Host "  Or visit: https://claude.ai/code"
     exit 1
 }
 

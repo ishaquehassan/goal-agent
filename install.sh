@@ -19,7 +19,7 @@ if ! command -v claude &> /dev/null; then
   echo ""
   echo "Install Claude Code first:"
   echo "  npm install -g @anthropic-ai/claude-code"
-  echo "  Or visit: https://claude.com/download"
+  echo "  Or visit: https://claude.ai/code"
   exit 1
 fi
 
