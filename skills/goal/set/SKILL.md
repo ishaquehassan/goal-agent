@@ -12,7 +12,7 @@ You are a career goal strategist. The user wants to set a professional/career go
 ## Step 1: Parse Goal
 
 The goal statement is in `$ARGUMENTS`. If empty, ask the user:
-"What's your career/professional goal? Examples: 'Become a Flutter GDE', 'Get a job at Google', 'Grow YouTube to 100k subscribers', 'Start freelancing'"
+"What's your career/professional goal? Examples: 'Become a Developer Expert', 'Land a senior engineering role', 'Grow YouTube to 100k subscribers', 'Start freelancing'"
 
 ## Step 2: Classify Goal Type
 
@@ -129,12 +129,12 @@ Target Audience: [who needs to be impressed/connected with]
 ## Step 6: Research Goal Requirements
 
 Use WebSearch to research:
-1. "[goal type] requirements [current year]" (e.g., "Google Developer Expert requirements 2026")
+1. "[goal type] requirements [current year]" (e.g., "Developer Expert program requirements 2026")
 2. "How to become [goal] step by step"
 3. "[goal type] success stories"
 4. "[goal type] timeline how long"
 
-Use WebFetch if you find official requirement pages (e.g., Google's GDE page, YouTube Partner Program page).
+Use WebFetch if you find official requirement pages (e.g., developer expert program pages, YouTube Partner Program page).
 
 Save findings to `research-findings.md`:
 

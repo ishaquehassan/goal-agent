@@ -60,7 +60,7 @@ Score each section 0-10 based on goal alignment:
 - Does it mention the goal-relevant skill/role FIRST?
 - Is the most impressive credential prominent?
 - Is it under 120 characters?
-- GDE goal: "Flutter Framework Contributor" before company name
+- Developer Expert goal: lead with framework/technology contribution
 - Job goal: Target role title + key skill
 - YouTube goal: Channel identity + niche
 - Scoring: 10 = perfectly aligned, 0 = completely irrelevant to goal
@@ -74,7 +74,7 @@ Score each section 0-10 based on goal alignment:
 
 **Top 5 Skills (weight: 15%)**
 - Are all 5 skills relevant to the goal niche?
-- Remove irrelevant skills (Java/Python for a Flutter GDE goal)
+- Remove irrelevant skills (e.g., Java/Python if your goal is in a different stack)
 - Add missing niche skills
 - Scoring: 10 = all 5 perfectly aligned, 0 = none relevant
 
@@ -89,7 +89,7 @@ Score each section 0-10 based on goal alignment:
 - Scoring: 10 = custom goal-aligned banner, 0 = default
 
 **Open to Work Badge (weight: 5%)**
-- GDE/networking goals: should be OFF (looks desperate)
+- Networking/expert goals: should be OFF (looks desperate)
 - Job hunting: can be ON but "visible to recruiters only"
 - Scoring: 10 = appropriate for goal, 0 = counterproductive
 

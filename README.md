@@ -12,7 +12,7 @@ Goal Agent turns Claude Code into a full career execution engine. It researches 
 
 | Command | What Happens |
 |---------|-------------|
-| `/goal:set "Become a Flutter GDE"` | Collects your profile, researches requirements, generates a phased strategy with milestones |
+| `/goal:set "Grow my YouTube to 100k"` | Collects your profile, researches requirements, generates a phased strategy with milestones |
 | `/goal:next` | Analyzes your progress and tells you exactly what to do today |
 | `/goal:status` | Full dashboard with KPIs, phase breakdown, engagement stats, content tracker |
 | `/goal:optimize linkedin` | Audits your LinkedIn profile against your goal, rewrites headline/about/skills, executes changes |
@@ -31,8 +31,8 @@ Goal Agent auto-detects your goal type and adapts everything accordingly:
 
 | Your Goal | What Changes |
 |-----------|-------------|
-| **Google Developer Expert** | Targets Google engineers on LinkedIn, suggests conference talks, tracks PRs and articles |
-| **Job at Google/Meta/etc** | Focuses on LeetCode prep, referral connections, interview practice, portfolio projects |
+| **Developer Expert Programs** | Targets relevant engineers on LinkedIn, suggests conference talks, tracks PRs and articles |
+| **Land a Job at a Top Company** | Focuses on LeetCode prep, referral connections, interview practice, portfolio projects |
 | **YouTube 100k subscribers** | Plans video content, cross-posts to Twitter/TikTok, tracks subscriber milestones |
 | **Start Freelancing** | Builds portfolio, optimizes Upwork/LinkedIn, plans case study content |
 | **Open Source Maintainer** | Tracks contributions, suggests projects, builds community presence |
@@ -72,7 +72,7 @@ cp goal-agent/agents/*.md ~/.claude/agents/
 claude
 
 # Set your goal
-/goal:set "Become a Flutter GDE in 6 months"
+/goal:set "Grow my YouTube channel to 100k subscribers"
 
 # Answer profile questions (2-3 minutes)
 # System auto-generates: strategy, content calendar, gap analysis
