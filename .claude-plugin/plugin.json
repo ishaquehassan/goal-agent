@@ -1,0 +1,11 @@
+{
+  "name": "goal-agent",
+  "description": "Full career goal agent for Claude Code. Set any professional goal, auto-generate strategy, optimize profiles, create content, engage with target audience, track progress across sessions. Works for GDE, job hunting, YouTube growth, freelancing, open source, any niche.",
+  "author": {
+    "name": "Ishaq Hassan",
+    "email": "ishaquehassan@gmail.com"
+  },
+  "version": "1.0.0",
+  "homepage": "https://github.com/ishaquehassan/goal-agent",
+  "license": "MIT"
+}
