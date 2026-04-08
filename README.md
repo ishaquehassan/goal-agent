@@ -65,47 +65,58 @@ cp goal-agent/agents/*.md ~/.claude/agents/
 
 ---
 
-## Quick Start
+## How to Use (Daily Flow)
 
-```
-# Open any project
-claude
+### Step 1: Set Your Goal (One Time)
 
-# Set your goal
+```bash
 /goal:set "Grow my YouTube channel to 100k subscribers"
-
-# Answer profile questions (2-3 minutes)
-# System auto-generates: strategy, content calendar, gap analysis
-
-# See what to do today
-/goal:next
-
-# Start executing
-/goal:engage 5        # Comment on target audience posts
-/goal:write article   # Write and publish content
-/goal:optimize linkedin  # Fix your profile
 ```
 
----
+It asks your name, role, skills, social links, achievements. Takes 3-5 minutes. Then it researches what's needed, builds your strategy, creates a content calendar, identifies gaps. Everything auto-generated.
 
-## How It Works
+### Step 2: Check Today's Priorities (Every Day)
 
-### 1. Set Your Goal
-`/goal:set` collects your profile (name, role, skills, social links, achievements) and your goal. It then researches what's required, analyzes your gaps, and generates a phased strategy with milestones and KPIs.
+```bash
+/goal:next
+```
 
-### 2. Daily Priorities
-`/goal:next` reads all your progress data, calculates what's most urgent/impactful, and gives you 3-5 specific actions for today with time estimates.
+Reads all your progress, calculates what's most urgent, gives you **top 5 actions** with time estimates and tags like `[ENGAGE]`, `[CONTENT]`, `[OPTIMIZE]`.
 
-### 3. Execute
-Use the execution commands to actually do the work:
-- **`/goal:optimize`** audits and fixes your LinkedIn/GitHub profiles via browser automation
-- **`/goal:write`** creates articles and posts, publishes them to Medium/LinkedIn
-- **`/goal:engage`** finds target audience posts, writes contextual comments, follows people
+### Step 3: Execute (Pick What Fits Your Day)
 
-### 4. Track
-- **`/goal:log`** records what you did each session
-- **`/goal:status`** shows your full dashboard
-- Everything persists across sessions via Claude Code's memory system
+```bash
+/goal:engage 5             # Find target audience posts, comment, follow, react
+/goal:write article        # Write a full article, publish to Medium, auto-promote on LinkedIn
+/goal:write linkedin-post  # Write and publish a LinkedIn post for your target audience
+/goal:optimize linkedin    # Audit your profile against your goal, fix headline/about/skills
+```
+
+### Step 4: Log Your Work
+
+```bash
+/goal:log "commented on 3 posts, published 1 article"
+```
+
+Records what you did, updates your progress percentage, suggests tomorrow's focus.
+
+### Step 5: Track Progress
+
+```bash
+/goal:status
+```
+
+Full dashboard: phase breakdown, KPIs, engagement stats, content tracker, streak, blockers.
+
+### Other Commands (When You Need Them)
+
+```bash
+/goal:research    # Deep dive into goal requirements, find success patterns
+/goal:contacts    # Manage your network, see who to reach out to
+/goal:calendar    # View and plan your weekly content schedule
+```
+
+> **Your daily loop:** `/goal:next` to see what to do, execute it, `/goal:log` to record it. That's it.
 
 ---
 
