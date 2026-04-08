@@ -1,43 +1,83 @@
+<div align="center">
+
 # Goal Agent
 
-**Your AI-powered career agent for Claude Code.**
+### Your career has a destination. This gets you there.
 
-Set any professional goal. Get a strategy. Execute it. Track progress. All from your terminal.
+[![Install](https://img.shields.io/badge/Install-One_Liner-brightgreen?style=for-the-badge)](#install)
+[![Commands](https://img.shields.io/badge/Commands-10-blue?style=for-the-badge)](#all-commands-reference)
+[![Platform](https://img.shields.io/badge/Platform-macOS_|_Windows_|_Linux-orange?style=for-the-badge)](#install)
 
-Goal Agent turns Claude Code into a full career execution engine. It researches what you need, builds your roadmap, optimizes your profiles, writes your content, engages with the right people, and tracks everything across sessions.
+</div>
+
+<br>
+
+> **Set a goal. Get a strategy. Optimize your profiles. Write content. Engage the right people. Track everything. All from your terminal.**
+
+<br>
+
+```
+$ /goal:set "Land a senior role at a top tech company"
+
+  Goal set: Senior Engineer at Top Tech Company
+  Category: job
+  Timeline: 4 months (Apr 8 - Aug 8, 2026)
+
+  Strategy:
+    Phase 1 (Foundation): LeetCode prep, portfolio projects, profile optimization
+    Phase 2 (Visibility): Technical articles, LinkedIn engagement, GitHub contributions
+    Phase 3 (Application): Referrals, applications, interview prep
+
+  Gap Analysis:
+    ✅ 13 years experience (exceeds requirement)
+    ⚠️  LinkedIn profile needs optimization for target role
+    ❌ No referral connections at target companies
+
+  Next: /goal:next for today's priorities
+```
+
+<br>
+
+<div align="center">
+
+**One command. Full strategy. Daily priorities. Real execution.**
+
+*Not a todo list. Not a planner. An agent that researches, writes, publishes, and engages for you.*
+
+</div>
 
 ---
 
-## What It Does
+## What Can It Do?
 
-| Command | What Happens |
-|---------|-------------|
-| `/goal:set "Grow my YouTube to 100k"` | Collects your profile, researches requirements, generates a phased strategy with milestones |
-| `/goal:next` | Analyzes your progress and tells you exactly what to do today |
-| `/goal:status` | Full dashboard with KPIs, phase breakdown, engagement stats, content tracker |
-| `/goal:optimize linkedin` | Audits your LinkedIn profile against your goal, rewrites headline/about/skills, executes changes |
-| `/goal:write article` | Writes a full Medium article, publishes it, auto-generates a LinkedIn promotion post |
-| `/goal:engage 5` | Finds target audience posts on LinkedIn, writes contextual comments, follows, reacts |
-| `/goal:contacts` | Manages your professional network in tiers, suggests who to reach out to |
+| You Say | It Does |
+|:--------|:--------|
+| `/goal:set "become a developer expert"` | Researches requirements, builds phased roadmap, identifies gaps, creates content calendar |
+| `/goal:next` | Tells you **exactly** what to do today, ranked by impact, with time estimates |
+| `/goal:optimize linkedin` | Opens your browser, audits your profile, rewrites your headline/about/skills, applies changes |
+| `/goal:write article` | Writes a full article, publishes to Medium, auto-generates a LinkedIn promotion post |
+| `/goal:engage 5` | Finds target people's posts, writes contextual comments, follows them, reacts. All automated. |
+| `/goal:status` | Full dashboard: KPIs, phase breakdown, engagement stats, content tracker, streak |
+| `/goal:contacts` | Manages your professional network in tiers, suggests who to reach out to next |
 | `/goal:calendar` | Plans your weekly content across platforms |
-| `/goal:log "wrote 2 articles"` | Records your work, updates progress percentage |
-| `/goal:research` | Deep dives into goal requirements, finds success patterns, identifies gaps |
+| `/goal:log "3 comments, 1 article"` | Records your work, updates progress percentage, suggests tomorrow's focus |
+| `/goal:research` | Deep dives into goal requirements, finds success patterns, shows what you're missing |
 
 ---
 
 ## Works For Any Goal
 
-Goal Agent auto-detects your goal type and adapts everything accordingly:
+Goal Agent auto-detects your goal type and adapts **everything**: platforms, strategy, targets, content style, engagement approach.
 
 | Your Goal | What Changes |
-|-----------|-------------|
+|:----------|:-------------|
 | **Developer Expert Programs** | Targets relevant engineers on LinkedIn, suggests conference talks, tracks PRs and articles |
-| **Land a Job at a Top Company** | Focuses on LeetCode prep, referral connections, interview practice, portfolio projects |
-| **YouTube 100k subscribers** | Plans video content, cross-posts to Twitter/TikTok, tracks subscriber milestones |
-| **Start Freelancing** | Builds portfolio, optimizes Upwork/LinkedIn, plans case study content |
-| **Open Source Maintainer** | Tracks contributions, suggests projects, builds community presence |
-| **Learn a New Skill** | Creates study plan, tracks certifications, connects with mentors |
-| **Custom Goal** | You define the platforms, milestones, and success criteria |
+| **Land a Job at a Top Company** | LeetCode prep, referral connections, interview practice, portfolio projects |
+| **YouTube 100k Subscribers** | Video content planning, cross-posts to Twitter/TikTok, subscriber milestones |
+| **Start Freelancing** | Portfolio building, Upwork/LinkedIn optimization, case study content |
+| **Open Source Maintainer** | Contribution tracking, project suggestions, community presence |
+| **Learn a New Skill** | Study plans, certification tracking, mentor connections |
+| **Something Else Entirely** | You define the platforms, milestones, and success criteria |
 
 ---
 
