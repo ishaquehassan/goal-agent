@@ -56,14 +56,14 @@ Today's Priorities:
 
 <br>
 
-**It doesn't just plan. It opens your browser, rewrites your LinkedIn, publishes your articles, comments on the right posts, and tracks every move.**
+**It doesn't just plan. It opens your browser, rewrites your [LinkedIn](https://linkedin.com), publishes your articles on [Medium](https://medium.com), comments on the right posts, and tracks every move.**
 
 <br>
 
 | | |
 |:---:|:---:|
 | 🧠 **Researches** your goal requirements | 📝 **Writes** articles and posts for you |
-| 🔧 **Optimizes** your LinkedIn/GitHub profiles | 💬 **Engages** with target audience automatically |
+| 🔧 **Optimizes** your [LinkedIn](https://linkedin.com)/[GitHub](https://github.com) profiles | 💬 **Engages** with target audience automatically |
 | 📊 **Tracks** progress across sessions | 📅 **Plans** your weekly content calendar |
 | 🎯 **Prioritizes** what to do each day | 👥 **Manages** your professional network |
 
@@ -81,12 +81,12 @@ Goal Agent auto-detects your goal type and adapts **everything**: platforms, str
 
 | Your Goal | What It Does For You |
 |:----------|:---------------------|
-| 🏆 **Developer Expert Programs** | Targets relevant engineers on LinkedIn, suggests conference talks, tracks PRs and articles |
-| 💼 **Land a Job at a Top Company** | LeetCode prep, referral connections, interview practice, portfolio projects |
-| 🎬 **YouTube 100k Subscribers** | Video content planning, cross-posts to Twitter/TikTok, subscriber milestones |
-| 💰 **Start Freelancing** | Portfolio building, Upwork/LinkedIn optimization, case study content |
-| 🌐 **Open Source Maintainer** | Contribution tracking, project suggestions, community presence |
-| 📚 **Learn a New Skill** | Study plans, certification tracking, mentor connections |
+| 🏆 **Developer Expert Programs** | Targets engineers on [LinkedIn](https://linkedin.com), suggests conference talks, tracks PRs on [GitHub](https://github.com) and articles on [Medium](https://medium.com) |
+| 💼 **Land a Job at a Top Company** | [LeetCode](https://leetcode.com) prep, referral connections on [LinkedIn](https://linkedin.com), interview practice, [GitHub](https://github.com) portfolio |
+| 🎬 **YouTube 100k Subscribers** | [YouTube](https://youtube.com) content planning, cross-posts to [Twitter/X](https://x.com) and [TikTok](https://tiktok.com), subscriber milestones |
+| 💰 **Start Freelancing** | Portfolio building, [Upwork](https://upwork.com)/[LinkedIn](https://linkedin.com) optimization, case study content |
+| 🌐 **Open Source Maintainer** | [GitHub](https://github.com) contribution tracking, project suggestions, [Discord](https://discord.com) community presence |
+| 📚 **Learn a New Skill** | Study plans on [Udemy](https://udemy.com), certification tracking, mentor connections on [LinkedIn](https://linkedin.com) |
 | ✨ **Something Else Entirely** | You define the platforms, milestones, and success criteria |
 
 ---
@@ -251,9 +251,9 @@ Remove-Item -Force "$env:USERPROFILE\.claude\agents\goal-researcher.md","$env:US
 |-------------|-----------|---------|
 | [Claude Code](https://claude.ai/code) | Everything | `npm i -g @anthropic-ai/claude-code` |
 | [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) | Profile optimization, publishing, engagement | Chrome Web Store |
-| LinkedIn account | Networking, engagement | Log in via browser |
-| GitHub account | OSS goals, profile optimization | `gh` CLI recommended |
-| Medium account | Article publishing | Log in via browser |
+| [LinkedIn](https://linkedin.com) account | Networking, engagement | Log in via browser |
+| [GitHub](https://github.com) account | OSS goals, profile optimization | [`gh` CLI](https://cli.github.com) recommended |
+| [Medium](https://medium.com) account | Article publishing | Log in via browser |
 
 ---
 
