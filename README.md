@@ -9,10 +9,21 @@
 <br>
 
 [![Install in 10 seconds](https://img.shields.io/badge/⚡_Install_in_10_seconds-One_Liner-00C853?style=for-the-badge&labelColor=1a1a2e)](#install)
+[![Commands](https://img.shields.io/badge/Commands-10-blue?style=for-the-badge&labelColor=1a1a2e)](#all-commands-reference)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&labelColor=1a1a2e)](LICENSE)
+
+[![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://ubuntu.com/)
+
+[![Claude Code](https://img.shields.io/badge/Claude_Code-6B4FBB?style=for-the-badge&logo=anthropic&logoColor=white)](https://claude.ai/code)
+[![Chrome](https://img.shields.io/badge/Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://www.google.com/chrome/)
+[![Brave](https://img.shields.io/badge/Brave-FB542B?style=for-the-badge&logo=brave&logoColor=white)](https://brave.com/)
+[![MCP](https://img.shields.io/badge/MCP-FF6B6B?style=for-the-badge)](https://modelcontextprotocol.io)
 
 <br>
 
-**10 commands** · **Any goal** · **Any niche** · **macOS, Windows, Linux**
+**Any goal** · **Any niche** · **Cross-platform** · **Browser automation built-in**
 
 <br>
 
