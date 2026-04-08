@@ -1,83 +1,93 @@
 <div align="center">
 
-# Goal Agent
+<br>
 
-### Your career has a destination. This gets you there.
+# 🎯 Goal Agent
 
-[![Install](https://img.shields.io/badge/Install-One_Liner-brightgreen?style=for-the-badge)](#install)
-[![Commands](https://img.shields.io/badge/Commands-10-blue?style=for-the-badge)](#all-commands-reference)
-[![Platform](https://img.shields.io/badge/Platform-macOS_|_Windows_|_Linux-orange?style=for-the-badge)](#install)
+<h3>Stop planning your career. Start executing it.</h3>
+
+<br>
+
+[![Install in 10 seconds](https://img.shields.io/badge/⚡_Install_in_10_seconds-One_Liner-00C853?style=for-the-badge&labelColor=1a1a2e)](#install)
+
+<br>
+
+**10 commands** · **Any goal** · **Any niche** · **macOS, Windows, Linux**
+
+<br>
 
 </div>
 
-<br>
-
-> **Set a goal. Get a strategy. Optimize your profiles. Write content. Engage the right people. Track everything. All from your terminal.**
-
-<br>
+<table>
+<tr>
+<td>
 
 ```
-$ /goal:set "Land a senior role at a top tech company"
+$ /goal:set "Land a senior role at Google"
 
-  Goal set: Senior Engineer at Top Tech Company
-  Category: job
-  Timeline: 4 months (Apr 8 - Aug 8, 2026)
+✅ Goal set: Senior Engineer at Google
+📋 Category: job
+⏰ Timeline: 4 months
 
-  Strategy:
-    Phase 1 (Foundation): LeetCode prep, portfolio projects, profile optimization
-    Phase 2 (Visibility): Technical articles, LinkedIn engagement, GitHub contributions
-    Phase 3 (Application): Referrals, applications, interview prep
+Strategy generated:
+  Phase 1 → LeetCode prep, portfolio, profile optimization
+  Phase 2 → Articles, LinkedIn engagement, GitHub PRs
+  Phase 3 → Referrals, applications, interview prep
 
-  Gap Analysis:
-    ✅ 13 years experience (exceeds requirement)
-    ⚠️  LinkedIn profile needs optimization for target role
-    ❌ No referral connections at target companies
+Gap Analysis:
+  ✅ 13 years experience (exceeds requirement)
+  ⚠️  LinkedIn needs optimization for target role
+  ❌ No referral connections at Google yet
 
-  Next: /goal:next for today's priorities
+$ /goal:next
+
+Today's Priorities:
+  1. [OPTIMIZE] Fix LinkedIn headline     (20 min)
+  2. [ENGAGE] Comment on 3 Google posts   (30 min)
+  3. [CONTENT] Write article on system design (2 hr)
+  4. [NETWORK] Connect with 2 engineers   (10 min)
 ```
 
-<br>
+</td>
+</tr>
+</table>
 
 <div align="center">
 
-**One command. Full strategy. Daily priorities. Real execution.**
+<br>
 
-*Not a todo list. Not a planner. An agent that researches, writes, publishes, and engages for you.*
+**It doesn't just plan. It opens your browser, rewrites your LinkedIn, publishes your articles, comments on the right posts, and tracks every move.**
+
+<br>
+
+| | |
+|:---:|:---:|
+| 🧠 **Researches** your goal requirements | 📝 **Writes** articles and posts for you |
+| 🔧 **Optimizes** your LinkedIn/GitHub profiles | 💬 **Engages** with target audience automatically |
+| 📊 **Tracks** progress across sessions | 📅 **Plans** your weekly content calendar |
+| 🎯 **Prioritizes** what to do each day | 👥 **Manages** your professional network |
+
+<br>
 
 </div>
 
 ---
 
-## What Can It Do?
+## 🔥 Works For Any Goal
 
-| You Say | It Does |
-|:--------|:--------|
-| `/goal:set "become a developer expert"` | Researches requirements, builds phased roadmap, identifies gaps, creates content calendar |
-| `/goal:next` | Tells you **exactly** what to do today, ranked by impact, with time estimates |
-| `/goal:optimize linkedin` | Opens your browser, audits your profile, rewrites your headline/about/skills, applies changes |
-| `/goal:write article` | Writes a full article, publishes to Medium, auto-generates a LinkedIn promotion post |
-| `/goal:engage 5` | Finds target people's posts, writes contextual comments, follows them, reacts. All automated. |
-| `/goal:status` | Full dashboard: KPIs, phase breakdown, engagement stats, content tracker, streak |
-| `/goal:contacts` | Manages your professional network in tiers, suggests who to reach out to next |
-| `/goal:calendar` | Plans your weekly content across platforms |
-| `/goal:log "3 comments, 1 article"` | Records your work, updates progress percentage, suggests tomorrow's focus |
-| `/goal:research` | Deep dives into goal requirements, finds success patterns, shows what you're missing |
-
----
-
-## Works For Any Goal
+> **You bring the ambition. Goal Agent figures out the rest.**
 
 Goal Agent auto-detects your goal type and adapts **everything**: platforms, strategy, targets, content style, engagement approach.
 
-| Your Goal | What Changes |
-|:----------|:-------------|
-| **Developer Expert Programs** | Targets relevant engineers on LinkedIn, suggests conference talks, tracks PRs and articles |
-| **Land a Job at a Top Company** | LeetCode prep, referral connections, interview practice, portfolio projects |
-| **YouTube 100k Subscribers** | Video content planning, cross-posts to Twitter/TikTok, subscriber milestones |
-| **Start Freelancing** | Portfolio building, Upwork/LinkedIn optimization, case study content |
-| **Open Source Maintainer** | Contribution tracking, project suggestions, community presence |
-| **Learn a New Skill** | Study plans, certification tracking, mentor connections |
-| **Something Else Entirely** | You define the platforms, milestones, and success criteria |
+| Your Goal | What It Does For You |
+|:----------|:---------------------|
+| 🏆 **Developer Expert Programs** | Targets relevant engineers on LinkedIn, suggests conference talks, tracks PRs and articles |
+| 💼 **Land a Job at a Top Company** | LeetCode prep, referral connections, interview practice, portfolio projects |
+| 🎬 **YouTube 100k Subscribers** | Video content planning, cross-posts to Twitter/TikTok, subscriber milestones |
+| 💰 **Start Freelancing** | Portfolio building, Upwork/LinkedIn optimization, case study content |
+| 🌐 **Open Source Maintainer** | Contribution tracking, project suggestions, community presence |
+| 📚 **Learn a New Skill** | Study plans, certification tracking, mentor connections |
+| ✨ **Something Else Entirely** | You define the platforms, milestones, and success criteria |
 
 ---
 
