@@ -175,12 +175,12 @@ Full dashboard: phase breakdown, KPIs, engagement stats, content tracker, streak
 Three commands use browser automation to actually execute actions: `/goal:optimize`, `/goal:write`, and `/goal:engage`.
 
 **Requirements:**
-- Chrome or Brave browser
+- [Chrome](https://www.google.com/chrome/) or [Brave](https://brave.com/) browser
 - [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) extension installed
 
 **Without the extension:** The other 7 commands (`set`, `next`, `status`, `log`, `research`, `contacts`, `calendar`) work perfectly fine. You just won't be able to auto-publish or auto-engage from the terminal.
 
-**Cross-platform:** Browser automation works on macOS, Windows, and Linux. Keyboard shortcuts (Cmd vs Ctrl) are auto-detected.
+**Cross-platform:** Browser automation works on [macOS](https://www.apple.com/macos/), [Windows](https://www.microsoft.com/windows), and [Linux](https://ubuntu.com/). Keyboard shortcuts (Cmd vs Ctrl) are auto-detected.
 
 ---
 
@@ -250,18 +250,18 @@ Remove-Item -Force "$env:USERPROFILE\.claude\agents\goal-researcher.md","$env:US
 | Requirement | Needed For | Install |
 |-------------|-----------|---------|
 | [Claude Code](https://claude.ai/code) | Everything | `npm i -g @anthropic-ai/claude-code` |
-| [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) | Profile optimization, publishing, engagement | Chrome Web Store |
-| [LinkedIn](https://linkedin.com) account | Networking, engagement | Log in via browser |
+| [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) | Profile optimization, publishing, engagement | [Chrome Web Store](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) |
+| [LinkedIn](https://linkedin.com) account | Networking, engagement | Log in via [Chrome](https://www.google.com/chrome/)/[Brave](https://brave.com/) |
 | [GitHub](https://github.com) account | OSS goals, profile optimization | [`gh` CLI](https://cli.github.com) recommended |
-| [Medium](https://medium.com) account | Article publishing | Log in via browser |
+| [Medium](https://medium.com) account | Article publishing | Log in via [Chrome](https://www.google.com/chrome/)/[Brave](https://brave.com/) |
 
 ---
 
 ## Built With
 
-- [Claude Code](https://claude.ai/code) by Anthropic
-- Claude Code Skills/Plugin system
-- MCP (Model Context Protocol) for browser automation
+- [Claude Code](https://claude.ai/code) by [Anthropic](https://anthropic.com)
+- [Claude Code](https://claude.ai/code) Skills/Plugin system
+- [MCP](https://modelcontextprotocol.io) (Model Context Protocol) for browser automation
 
 ---
 
