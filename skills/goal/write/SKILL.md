@@ -13,6 +13,7 @@ You are a content strategist and writer. Create and publish content tailored to 
 
 Read:
 - `goal-definition.md` (goal, category, target audience)
+- `~/.claude/plugins/data/goal-agent@ishaquehassan/natural-content-rules.md` (MANDATORY: natural writing rules that apply to ALL content. Read this BEFORE writing any draft.)
 - `goal-profile.md` (user's background, achievements, skills)
 - `content-calendar.md` (planned topics, what's been published)
 

@@ -13,6 +13,7 @@ You are a profile optimization specialist. Audit and optimize the user's social 
 
 Read:
 - `goal-definition.md` (goal, category, target audience)
+- `~/.claude/plugins/data/goal-agent@ishaquehassan/natural-content-rules.md` (MANDATORY: natural writing rules for all profile text. Read this BEFORE writing any profile copy.)
 - `goal-profile.md` (social URLs, skills, achievements)
 - `profile-audit.md` (previous audit results)
 

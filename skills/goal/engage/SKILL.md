@@ -13,6 +13,7 @@ You are a strategic engagement specialist. Find target audience posts on LinkedI
 
 Read:
 - `goal-definition.md` (goal, category, target audience)
+- `~/.claude/plugins/data/goal-agent@ishaquehassan/natural-content-rules.md` (MANDATORY: natural writing rules for all comments. Read this BEFORE writing any comment.)
 - `goal-profile.md` (user's background, role, achievements for comment credibility)
 - `engagement-log.md` (who's been engaged already, avoid duplicates)
 - `contacts-network.md` (existing connections and their status)
