@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal Agent Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            surface: { DEFAULT: '#0f172a', card: '#1e293b', hover: '#334155' },
+            accent: { DEFAULT: '#3b82f6', glow: '#60a5fa' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-surface text-gray-100 min-h-screen font-sans antialiased">
+
+  <!-- Top Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-xl">🎯</span>
+        <span class="font-bold text-lg">Goal Agent</span>
+        <span id="nav-goal-name" class="text-sm text-gray-400 ml-2"></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span id="nav-status" class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">Connected</span>
+        <span id="nav-progress" class="text-sm font-mono text-accent"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar + Content -->
+  <div class="flex pt-14">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-14 bottom-0 w-56 glass-sidebar border-r border-white/5 p-3 flex flex-col gap-1">
+      <a href="#overview" class="nav-link active" data-page="overview">
+        <span>📊</span> Overview
+      </a>
+      <a href="#progress" class="nav-link" data-page="progress">
+        <span>📈</span> Progress
+      </a>
+      <a href="#calendar" class="nav-link" data-page="calendar">
+        <span>📅</span> Calendar
+      </a>
+      <a href="#network" class="nav-link" data-page="network">
+        <span>👥</span> Network
+      </a>
+      <a href="#commands" class="nav-link" data-page="commands">
+        <span>⚡</span> Commands
+      </a>
+
+      <div class="mt-auto pt-4 border-t border-white/5">
+        <div class="text-xs text-gray-500 px-3">
+          <div id="sidebar-days" class="mb-1"></div>
+          <div id="sidebar-streak" class="mb-1"></div>
+          <div id="sidebar-phase" class=""></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-56 flex-1 p-6 min-h-screen">
+      <div id="page-overview" class="page"></div>
+      <div id="page-progress" class="page hidden"></div>
+      <div id="page-calendar" class="page hidden"></div>
+      <div id="page-network" class="page hidden"></div>
+      <div id="page-commands" class="page hidden"></div>
+      <div id="page-empty" class="page hidden"></div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/components/overview.js"></script>
+  <script src="/js/components/progress.js"></script>
+  <script src="/js/components/calendar.js"></script>
+  <script src="/js/components/contacts.js"></script>
+  <script src="/js/components/commands.js"></script>
+  <script src="/js/components/empty.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

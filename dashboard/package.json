@@ -1,0 +1,12 @@
+{
+  "name": "goal-agent-dashboard",
+  "version": "1.0.0",
+  "description": "Localhost web dashboard for Goal Agent",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["goal-agent", "dashboard", "claude-code"],
+  "author": "Ishaq Hassan",
+  "license": "MIT"
+}

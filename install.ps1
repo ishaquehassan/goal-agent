@@ -25,6 +25,24 @@ if (-not $gitPath) {
     exit 1
 }
 
+# Check Node.js (needed for dashboard)
+$nodePath = Get-Command node -ErrorAction SilentlyContinue
+$hasNode = $false
+if (-not $nodePath) {
+    Write-Host "WARNING: Node.js not found." -ForegroundColor Yellow
+    Write-Host "  Dashboard requires Node.js 18+."
+    Write-Host "  Install: https://nodejs.org"
+    Write-Host "  All CLI commands will work without it."
+    Write-Host ""
+} else {
+    $nodeVer = [int](node -e "console.log(process.version.slice(1).split('.')[0])")
+    if ($nodeVer -lt 18) {
+        Write-Host "WARNING: Node.js $nodeVer found, dashboard needs 18+." -ForegroundColor Yellow
+    } else {
+        $hasNode = $true
+    }
+}
+
 Write-Host "Downloading Goal Agent..." -ForegroundColor Yellow
 
 # Clone to temp
@@ -57,6 +75,14 @@ Get-ChildItem (Join-Path $tempDir "skills\goal") -Directory | ForEach-Object {
     }
 }
 
+# Copy dashboard
+Write-Host "Setting up dashboard..." -ForegroundColor Yellow
+$dashboardDest = Join-Path $pluginDir "dashboard"
+if (Test-Path $dashboardDest) {
+    Remove-Item -Recurse -Force $dashboardDest
+}
+Copy-Item -Recurse (Join-Path $tempDir "dashboard") $dashboardDest
+
 # Copy agents
 $agentsDir = Join-Path $claudeDir "agents"
 New-Item -ItemType Directory -Force -Path $agentsDir | Out-Null
@@ -76,6 +102,9 @@ Write-Host "  1. Open any project with Claude Code"
 Write-Host '  2. Set your goal:     /goal:set "your goal here"'
 Write-Host "  3. Today's priorities: /goal:next"
 Write-Host "  4. Full dashboard:     /goal:status"
+Write-Host ""
+Write-Host "Dashboard:" -ForegroundColor Cyan
+Write-Host "  /goal:dashboard  Open web dashboard (http://localhost:8080)"
 Write-Host ""
 Write-Host "All Commands:" -ForegroundColor Cyan
 Write-Host "  /goal:set        Set a new career/professional goal"

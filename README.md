@@ -181,6 +181,35 @@ Full dashboard: phase breakdown, KPIs, engagement stats, content tracker, streak
 
 ---
 
+## Web Dashboard
+
+Goal Agent includes a localhost web dashboard with real-time updates, charts, and command execution.
+
+```bash
+/goal:dashboard
+```
+
+Opens `http://localhost:8080` with:
+
+| Panel | What It Shows |
+|:------|:-------------|
+| **Overview** | Progress ring, KPIs, phase breakdown, profile scores, blockers |
+| **Progress** | Session history, streaks, milestones |
+| **Calendar** | Weekly content grid, platform color-coding, ideas backlog |
+| **Network** | Tiered contacts, engagement stats, connection status |
+| **Commands** | Run all 10 commands from browser with streaming terminal output |
+
+**Features:**
+- Zero dependencies (pure Node.js, no npm install needed)
+- Dark glassmorphism UI with SVG charts
+- Real-time updates when state files change
+- Works on macOS, Windows, and Linux
+- Auto-opens browser on startup
+
+**Requirements:** [Node.js](https://nodejs.org) 18+ (for the local server)
+
+---
+
 ## Browser Automation
 
 Three commands use browser automation to actually execute actions: `/goal:optimize`, `/goal:write`, and `/goal:engage`.

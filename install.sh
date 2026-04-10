@@ -30,6 +30,24 @@ if ! command -v git &> /dev/null; then
   exit 1
 fi
 
+# Check Node.js (needed for dashboard)
+if ! command -v node &> /dev/null; then
+  echo -e "${YELLOW}WARNING: Node.js not found.${NC}"
+  echo "  Dashboard requires Node.js 18+."
+  echo "  Install: https://nodejs.org or 'brew install node'"
+  echo "  All CLI commands will work without it."
+  echo ""
+  HAS_NODE=false
+else
+  NODE_VER=$(node -e "console.log(process.version.slice(1).split('.')[0])")
+  if [ "$NODE_VER" -lt 18 ]; then
+    echo -e "${YELLOW}WARNING: Node.js $NODE_VER found, dashboard needs 18+.${NC}"
+    HAS_NODE=false
+  else
+    HAS_NODE=true
+  fi
+fi
+
 echo -e "${YELLOW}Downloading Goal Agent...${NC}"
 
 # Clone to temp
@@ -64,6 +82,14 @@ for skill_dir in "$TEMP_DIR/goal-agent/skills/goal"/*/; do
   fi
 done
 
+# Copy dashboard
+echo -e "${YELLOW}Setting up dashboard...${NC}"
+DASHBOARD_DIR="$PLUGIN_DIR/dashboard"
+if [ -d "$DASHBOARD_DIR" ]; then
+  rm -rf "$DASHBOARD_DIR"
+fi
+cp -r "$TEMP_DIR/goal-agent/dashboard" "$DASHBOARD_DIR"
+
 # Copy agents
 AGENTS_DIR="$CLAUDE_DIR/agents"
 mkdir -p "$AGENTS_DIR"
@@ -79,6 +105,9 @@ echo "  1. Open any project with Claude Code"
 echo '  2. Set your goal:     /goal:set "your goal here"'
 echo "  3. Today's priorities: /goal:next"
 echo "  4. Full dashboard:     /goal:status"
+echo ""
+echo -e "${CYAN}Dashboard:${NC}"
+echo "  /goal:dashboard  Open web dashboard (http://localhost:8080)"
 echo ""
 echo -e "${CYAN}All Commands:${NC}"
 echo "  /goal:set        Set a new career/professional goal"
