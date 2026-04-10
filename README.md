@@ -211,9 +211,9 @@ Three commands use browser automation to actually execute actions: `/goal:optimi
 
 | Command | Description | Browser Needed |
 |---------|-------------|:--------------:|
-| `/goal:optimize [platform]` | Optimize social profiles | Yes |
-| `/goal:write [type]` | Create and publish content | Yes (for publish) |
-| `/goal:engage [count]` | Engage with target audience | Yes |
+| `/goal:optimize [platform]` | Optimize social profiles (`linkedin`, `github`, `twitter`, `all`) | Yes |
+| `/goal:write [type]` | Create and publish content (`article`, `linkedin-post`, `cross-post`) | Yes (for publish) |
+| `/goal:engage [count]` | Engage with target audience (`1`-`10`, default: `5`) | Yes |
 | `/goal:contacts` | Network management | No |
 | `/goal:calendar` | Content calendar | No |
 
