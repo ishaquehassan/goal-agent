@@ -217,7 +217,7 @@ const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 5. Short and punchy: 2 paragraphs usually, 3 max only for stories.
 6. End with action or curiosity (not generic "Thanks for sharing").
 7. No em dashes anywhere.
-8. Emojis: vary (sometimes 0, sometimes 1-2, different each time).
+8. Emojis: max 1-2 per comment. NEVER 3+ emojis. Never stack emojis together. Vary which emoji each time.
 9. No AI/Claude/automation mentions ever.
 10. Vary structure: 1 para / 2 para / question / story / pushback / one-liner.
 11. Include EMOTION: "Wait, what??" / "This is insane" / "Can't wait to try this".

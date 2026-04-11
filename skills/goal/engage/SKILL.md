@@ -206,7 +206,7 @@ Use `get_page_text` to read the complete post. Expand "...see more" if needed.
 4. VARY EVERYTHING (this is critical for looking human):
    - Length: sometimes 2 lines, sometimes 5, sometimes 8+
    - Structure: single paragraph / two paragraphs / three short sentences / just a question with context / a story / a respectful disagreement
-   - Emojis: sometimes 0, sometimes 1, sometimes 2. Different ones each time. NOT always the same emojis
+   - Emojis: sometimes 0, sometimes 1, max 2. NEVER 3+ emojis. Never stack emojis together. Different ones each time.
    - Emoji placement: beginning / middle / end / nowhere
    - Endings: question / statement / observation / challenge / personal anecdote
    - Tone: excited / thoughtful / curious / slightly challenging / casual
