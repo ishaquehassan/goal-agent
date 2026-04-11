@@ -13,7 +13,18 @@ const FileWatcher = require('./lib/file-watcher');
 const { runCommand, addSSEClient, getStreamStatus, killStream } = require('./lib/runner');
 
 // Resolve working directory (where state .md files live)
-const WORK_DIR = process.env.GOAL_AGENT_WORKDIR || process.cwd();
+// Auto-detect: walk up from given dir until goal-definition.md is found
+function findGoalDir(startDir) {
+  let dir = startDir;
+  for (let i = 0; i < 5; i++) {
+    if (fs.existsSync(path.join(dir, 'goal-definition.md'))) return dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return startDir; // fallback to original
+}
+const WORK_DIR = findGoalDir(process.env.GOAL_AGENT_WORKDIR || process.cwd());
 const PORT_START = parseInt(process.env.GOAL_DASHBOARD_PORT || '8080', 10);
 
 // MIME types for static files
@@ -106,6 +117,7 @@ function handleAPI(req, res, pathname, url) {
     if (!ALLOWED_COMMANDS.includes(command)) {
       return sendJSON(res, 400, { error: `Unknown command: ${command}` });
     }
+
 
     let body = '';
     req.on('data', chunk => { body += chunk; });

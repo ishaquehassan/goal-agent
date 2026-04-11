@@ -9,7 +9,7 @@
 <br>
 
 [![Install in 10 seconds](https://img.shields.io/badge/⚡_Install_in_10_seconds-One_Liner-00C853?style=for-the-badge&labelColor=1a1a2e)](#install)
-[![Commands](https://img.shields.io/badge/Commands-10-blue?style=for-the-badge&labelColor=1a1a2e)](#all-commands-reference)
+[![Commands](https://img.shields.io/badge/Commands-12-blue?style=for-the-badge&labelColor=1a1a2e)](#all-commands-reference)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&labelColor=1a1a2e)](LICENSE)
 
 [![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
@@ -119,10 +119,41 @@ irm https://raw.githubusercontent.com/ishaquehassan/goal-agent/main/install.ps1 
 ### Manual Install
 
 ```bash
-git clone https://github.com/ishaquehassan/goal-agent.git
-cp -r goal-agent/skills/goal ~/.claude/commands/goal
-cp goal-agent/agents/*.md ~/.claude/agents/
+git clone https://github.com/ishaquehassan/goal-agent.git ~/.claude/plugins/data/goal-agent@ishaquehassan
+mkdir -p ~/.claude/commands/goal
+for d in ~/.claude/plugins/data/goal-agent@ishaquehassan/skills/goal/*/; do
+  cp "$d/SKILL.md" ~/.claude/commands/goal/$(basename "$d").md
+done
+cp ~/.claude/plugins/data/goal-agent@ishaquehassan/agents/*.md ~/.claude/agents/
 ```
+
+> The install script clones the repo directly into the plugin directory. Future updates are just a `git pull` away.
+
+---
+
+## Update
+
+### From Claude Code
+
+```bash
+/goal:update
+```
+
+Checks your installed version, pulls the latest from GitHub, and syncs all commands automatically.
+
+### From Terminal
+
+**macOS / Linux:**
+```bash
+curl -sL https://raw.githubusercontent.com/ishaquehassan/goal-agent/main/update.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/ishaquehassan/goal-agent/main/update.ps1 | iex
+```
+
+> **Upgrading from v1.0.0?** Just re-run the install command. It detects your old installation, upgrades it to the git-based format, and syncs everything. All future updates will work through `/goal:update`.
 
 ---
 
@@ -175,6 +206,8 @@ Full dashboard: phase breakdown, KPIs, engagement stats, content tracker, streak
 /goal:research    # Deep dive into goal requirements, find success patterns
 /goal:contacts    # Manage your network, see who to reach out to
 /goal:calendar    # View and plan your weekly content schedule
+/goal:dashboard   # Open the live web dashboard in your browser
+/goal:update      # Update to the latest version
 ```
 
 > **Your daily loop:** `/goal:next` to see what to do, execute it, `/goal:log` to record it. That's it.
@@ -183,42 +216,106 @@ Full dashboard: phase breakdown, KPIs, engagement stats, content tracker, streak
 
 ## Web Dashboard
 
-Goal Agent includes a localhost web dashboard with real-time updates, charts, and command execution.
+A Cyberpunk 2077-inspired command center that runs locally with real-time updates, charts, and one-click command execution.
 
 ```bash
 /goal:dashboard
 ```
 
-Opens `http://localhost:8080` with:
+<br>
 
-| Panel | What It Shows |
-|:------|:-------------|
-| **Overview** | Progress ring, KPIs, phase breakdown, profile scores, blockers |
-| **Progress** | Session history, streaks, milestones |
-| **Calendar** | Weekly content grid, platform color-coding, ideas backlog |
-| **Network** | Tiered contacts, engagement stats, connection status |
-| **Commands** | Run all 10 commands from browser with streaming terminal output |
+<div align="center">
 
-**Features:**
-- Zero dependencies (pure Node.js, no npm install needed)
-- Dark glassmorphism UI with SVG charts
-- Real-time updates when state files change
+### CMD - Mission Overview
+
+</div>
+
+<p align="center">
+  <img src="docs/cmd-overview.png" alt="CMD - Mission Overview" width="720">
+</p>
+
+> KPI sliders, phase breakdown, profile radar chart, smart ops with one-click actions, threat board for blockers.
+
+<br>
+
+<div align="center">
+
+### OPS - Operations Log
+
+</div>
+
+<p align="center">
+  <img src="docs/ops-progress.png" alt="OPS - Operations Log" width="720">
+</p>
+
+> Session history with duration and progress badges, milestone tracker with status dots.
+
+<br>
+
+<div align="center">
+
+### INTEL - Content Calendar
+
+</div>
+
+<p align="center">
+  <img src="docs/intel-calendar.png" alt="INTEL - Content Calendar" width="720">
+</p>
+
+> Weekly content pipeline grouped by platform, publish status tracking, ideas backlog, one-click "DO IT" buttons.
+
+<br>
+
+<div align="center">
+
+### NET - Network Intelligence
+
+</div>
+
+<p align="center">
+  <img src="docs/net-network.png" alt="NET - Network Intelligence" width="720">
+</p>
+
+> Tiered contact list (decision-makers, influencers, peers), company tags, engagement history, follow-up dates.
+
+<br>
+
+<div align="center">
+
+### TERM - Command Terminal
+
+</div>
+
+<p align="center">
+  <img src="docs/term-terminal.png" alt="TERM - Command Terminal" width="720">
+</p>
+
+> Split-panel terminal: command list on left, streaming output on right. Run any goal command from the browser. Browser commands (engage, optimize, write) open in a new terminal window with full MCP access.
+
+<br>
+
+**Dashboard features:**
+
+- Zero dependencies (pure Node.js, no npm install)
+- Cyberpunk 2077 game-inspired UI with SVG charts
+- Real-time updates via WebSocket when state files change
+- Run all 12 commands directly from the browser
+- Browser commands auto-open interactive terminal sessions
+- Auto-detects goal directory, multi-instance support
 - Works on macOS, Windows, and Linux
-- Auto-opens browser on startup
-
-**Requirements:** [Node.js](https://nodejs.org) 18+ (for the local server)
+- Requires [Node.js](https://nodejs.org) 18+
 
 ---
 
 ## Browser Automation
 
-Three commands use browser automation to actually execute actions: `/goal:optimize`, `/goal:write`, and `/goal:engage`.
+Three commands use browser automation to execute actions: `/goal:optimize`, `/goal:write`, and `/goal:engage`.
 
 **Requirements:**
 - [Chrome](https://www.google.com/chrome/) or [Brave](https://brave.com/) browser
 - [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) extension installed
 
-**Without the extension:** The other 7 commands (`set`, `next`, `status`, `log`, `research`, `contacts`, `calendar`) work perfectly fine. You just won't be able to auto-publish or auto-engage from the terminal.
+**Without the extension:** The other 9 commands (`set`, `next`, `status`, `log`, `research`, `contacts`, `calendar`, `dashboard`, `update`) work perfectly fine. You just won't be able to auto-publish or auto-engage from the terminal.
 
 **Cross-platform:** Browser automation works on [macOS](https://www.apple.com/macos/), [Windows](https://www.microsoft.com/windows), and [Linux](https://ubuntu.com/). Keyboard shortcuts (Cmd vs Ctrl) are auto-detected.
 
@@ -245,6 +342,13 @@ Three commands use browser automation to actually execute actions: `/goal:optimi
 | `/goal:engage [count]` | Engage with target audience (`1`-`10`, default: `5`) | Yes |
 | `/goal:contacts` | Network management | No |
 | `/goal:calendar` | Content calendar | No |
+
+### System
+
+| Command | Description | Browser Needed |
+|---------|-------------|:--------------:|
+| `/goal:dashboard` | Open the live web dashboard | No |
+| `/goal:update` | Update to latest version | No |
 
 ---
 
@@ -291,6 +395,7 @@ Remove-Item -Force "$env:USERPROFILE\.claude\agents\goal-researcher.md","$env:US
 |-------------|-----------|---------|
 | [Claude Code](https://claude.ai/code) | Everything | `npm i -g @anthropic-ai/claude-code` |
 | [Claude in Chrome](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) | Profile optimization, publishing, engagement | [Chrome Web Store](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) |
+| [Node.js](https://nodejs.org) 18+ | Web dashboard | [nodejs.org](https://nodejs.org) |
 | [LinkedIn](https://linkedin.com) account | Networking, engagement | Log in via [Chrome](https://www.google.com/chrome/)/[Brave](https://brave.com/) |
 | [GitHub](https://github.com) account | OSS goals, profile optimization | [`gh` CLI](https://cli.github.com) recommended |
 | [Medium](https://medium.com) account | Article publishing | Log in via [Chrome](https://www.google.com/chrome/)/[Brave](https://brave.com/) |

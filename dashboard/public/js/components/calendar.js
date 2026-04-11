@@ -1,6 +1,17 @@
 /**
- * Content calendar panel
+ * INTEL // Content Pipeline
+ * CP2077 clean list rows
  */
+
+function calendarDoIt(type, platform) {
+  const p = platform.toLowerCase();
+  let cmd = 'write';
+  let args = 'article';
+  if (type.includes('post') || (p.includes('linkedin') && !type.includes('article'))) args = 'linkedin-post';
+  else if (type.includes('cross')) args = 'cross-post';
+  location.hash = 'commands';
+  setTimeout(() => { if (typeof handleCmdClick === 'function') handleCmdClick(cmd); }, 100);
+}
 
 function renderCalendar(state) {
   const el = document.getElementById('page-calendar');
@@ -9,7 +20,6 @@ function renderCalendar(state) {
   const calendarData = state.files['content-calendar'] || {};
   const entries = state.calendar || [];
 
-  // Group by week
   const weeks = {};
   for (const entry of entries) {
     const week = entry.week || 'Unscheduled';
@@ -17,80 +27,80 @@ function renderCalendar(state) {
     weeks[week].push(entry);
   }
 
-  // Backlog from sections
   const backlog = [];
   for (const [title, section] of Object.entries(calendarData.sections || {})) {
-    if (title.toLowerCase().includes('backlog') && section.list) {
-      backlog.push(...section.list);
-    }
+    if (title.toLowerCase().includes('backlog') && section.list) backlog.push(...section.list);
   }
 
-  const platformColors = {
-    'linkedin': 'bg-blue-500/20 text-blue-400 border-blue-500/20',
-    'medium': 'bg-purple-500/20 text-purple-400 border-purple-500/20',
-    'twitter': 'bg-sky-500/20 text-sky-400 border-sky-500/20',
-    'youtube': 'bg-red-500/20 text-red-400 border-red-500/20',
-    'github': 'bg-gray-500/20 text-gray-400 border-gray-500/20'
-  };
+  const total = entries.length;
+  const published = entries.filter(e => (e.status || '').toLowerCase().includes('publish')).length;
+  const overdue = entries.filter(e => (e.status || '').toLowerCase().includes('overdue')).length;
+  const planned = total - published - overdue;
 
   const statusBadge = (status) => {
     const s = (status || '').toLowerCase();
-    if (s.includes('publish')) return '<span class="badge badge-green">Published</span>';
-    if (s.includes('draft')) return '<span class="badge badge-yellow">Draft</span>';
-    if (s.includes('overdue')) return '<span class="badge badge-red">Overdue</span>';
-    return '<span class="badge badge-blue">Planned</span>';
+    if (s.includes('publish')) return '<span class="cp-badge cp-badge-green">PUBLISHED</span>';
+    if (s.includes('overdue')) return '<span class="cp-badge cp-badge-red">OVERDUE</span>';
+    if (s.includes('draft')) return '<span class="cp-badge cp-badge-cyan">DRAFT</span>';
+    return '<span class="cp-badge cp-badge-dim">PLANNED</span>';
   };
 
-  el.innerHTML = `
-    <div class="max-w-5xl">
-      <h1 class="text-2xl font-bold mb-6">Content Calendar</h1>
+  const platformColor = { 'linkedin': '#0066ff', 'medium': '#e83535', 'twitter': '#00d4ff', 'youtube': '#e83535', 'github': '#6a6a78' };
 
-      <!-- Weekly schedules -->
-      ${Object.entries(weeks).map(([week, items]) => `
-        <div class="glass-card p-5 mb-6">
-          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">${escapeHtml(week)}</h2>
-          <div class="space-y-3">
-            ${items.map(item => {
-              const platform = (item.platform || '').toLowerCase();
-              const colorClass = platformColors[platform] || 'bg-gray-500/20 text-gray-400 border-gray-500/20';
-              return `
-                <div class="flex items-center gap-4 p-3 rounded-lg border ${colorClass}">
-                  <div class="w-24 text-xs font-medium">${escapeHtml(item.day || '')}</div>
-                  <div class="flex-1">
-                    <div class="text-sm font-medium text-gray-200">${escapeHtml(item.topic || item.type || '')}</div>
-                    <div class="flex items-center gap-2 mt-1">
-                      <span class="text-xs text-gray-400">${escapeHtml(item.platform || '')}</span>
-                      <span class="text-xs text-gray-500">${escapeHtml(item.type || '')}</span>
-                    </div>
+  el.innerHTML = `
+    <h1 class="font-display font-bold text-xl text-white tracking-wider uppercase mb-6">Mission Pipeline</h1>
+
+    <div class="cp-stats">
+      <div class="cp-stat"><div class="cp-stat-value">${total}</div><div class="cp-stat-label">Total Ops</div></div>
+      <div class="cp-stat"><div class="cp-stat-value green">${published}</div><div class="cp-stat-label">Published</div></div>
+      <div class="cp-stat"><div class="cp-stat-value">${planned}</div><div class="cp-stat-label">Planned</div></div>
+      <div class="cp-stat"><div class="cp-stat-value red">${overdue}</div><div class="cp-stat-label">Overdue</div></div>
+    </div>
+
+    ${Object.entries(weeks).map(([week, items]) => `
+      <div class="cp-section">
+        <div class="cp-section-header">${escapeHtml(week).toUpperCase()} <span class="cp-count">${items.length} OPS</span></div>
+        ${items.map(item => {
+          const platform = (item.platform || '').toLowerCase();
+          const color = platformColor[platform] || '#6a6a78';
+          const isPublished = (item.status || '').toLowerCase().includes('publish');
+          return `
+            <div class="cp-equip" style="border-left-color: ${color}">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="cp-equip-title" style="color: ${color}">${escapeHtml(item.topic || item.type || 'Untitled')}</div>
+                  <div class="cp-equip-sub">
+                    <span style="color: ${color}">${escapeHtml(item.platform || '')}</span>
+                    ${item.day ? ` / ${escapeHtml(item.day)}` : ''}
+                    ${item.type ? ` / ${escapeHtml(item.type)}` : ''}
                   </div>
-                  <div>${statusBadge(item.status)}</div>
                 </div>
-              `;
-            }).join('')}
-          </div>
+                <div class="flex items-center gap-2">
+                  ${statusBadge(item.status)}
+                  ${!isPublished ? `<button onclick="calendarDoIt('${escapeHtml((item.type || '').toLowerCase())}', '${escapeHtml(item.platform || '')}')" class="cp-btn cyan" style="padding: 3px 10px; font-size: 10px">DO IT</button>` : ''}
+                </div>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    `).join('')}
+
+    ${Object.keys(weeks).length === 0 ? `
+      <div class="cp-section">
+        <div class="cp-section-header">NO MISSIONS SCHEDULED</div>
+        <div class="py-6 font-mono text-xs text-cp-dim">Run /goal:calendar to plan content</div>
+      </div>
+    ` : ''}
+
+    ${backlog.length ? `
+    <div class="cp-section">
+      <div class="cp-section-header cyan">IDEAS_BACKLOG <span class="cp-count">${backlog.length}</span></div>
+      ${backlog.map((idea, i) => `
+        <div class="cp-row">
+          <span class="font-mono text-[10px] text-cp-cyan">${String(i + 1).padStart(2, '0')}</span>
+          <span class="text-xs text-cp-text font-body">${escapeHtml(idea)}</span>
         </div>
       `).join('')}
-
-      ${Object.keys(weeks).length === 0 ? `
-        <div class="glass-card p-8 text-center text-gray-500 mb-6">
-          <p class="text-lg mb-2">📅 No content scheduled yet</p>
-          <p class="text-sm">Run /goal:calendar to plan your content</p>
-        </div>
-      ` : ''}
-
-      <!-- Backlog -->
-      ${backlog.length ? `
-      <div class="glass-card p-5">
-        <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Ideas Backlog (${backlog.length})</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          ${backlog.map((idea, i) => `
-            <div class="flex items-start gap-2 p-2 rounded-lg text-sm text-gray-400 hover:bg-white/[0.02]">
-              <span class="text-gray-600 font-mono text-xs mt-0.5">${i + 1}.</span>
-              <span>${escapeHtml(idea)}</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>` : ''}
-    </div>
+    </div>` : ''}
   `;
 }

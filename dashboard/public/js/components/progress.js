@@ -1,5 +1,6 @@
 /**
- * Progress & session logs panel
+ * OPS // Session History
+ * CP2077 Load Game style list
  */
 
 function renderProgress(state) {
@@ -9,7 +10,6 @@ function renderProgress(state) {
   const tracker = state.files['progress-tracker'] || {};
   const metrics = state.metrics || {};
 
-  // Parse session logs
   const sessions = [];
   for (const [title, section] of Object.entries(tracker.sections || {})) {
     if (title.toLowerCase().startsWith('session')) {
@@ -18,87 +18,105 @@ function renderProgress(state) {
       const duration = lines.find(l => l.includes('Duration'))?.replace(/.*Duration.*?:\s*/, '').trim() || '';
       const progressGain = lines.find(l => l.includes('Progress gain'))?.replace(/.*Progress gain.*?:\s*/, '').trim() || '';
       const accomplishments = lines.filter(l => l.startsWith('- ')).map(l => l.replace(/^-\s*/, ''));
-
       sessions.push({ title, summary, duration, progressGain, accomplishments });
     }
   }
 
-  // Milestones from strategy
   const roadmap = state.files['strategy-roadmap'] || {};
   const milestones = [];
   for (const [title, section] of Object.entries(roadmap.sections || {})) {
     if (section.list) {
       for (const item of section.list) {
-        const done = item.includes('✅') || item.toLowerCase().includes('done') || item.toLowerCase().includes('complete');
-        milestones.push({ text: item.replace(/[✅❌⚠️]/g, '').trim(), done, phase: title });
+        const done = item.includes('\u2705') || item.toLowerCase().includes('done') || item.toLowerCase().includes('complete');
+        milestones.push({ text: item.replace(/[\u2705\u274C\u26A0\uFE0F]/g, '').trim(), done, phase: title });
       }
     }
   }
 
+  const progress = metrics.overall_progress || 0;
+
   el.innerHTML = `
-    <div class="max-w-5xl">
-      <h1 class="text-2xl font-bold mb-6">Progress</h1>
+    <h1 class="font-display font-bold text-xl text-white tracking-wider uppercase mb-6">Operations Log</h1>
 
-      <!-- Metrics Row -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div class="glass-card stat-card">
-          <div class="stat-value">${metrics.overall_progress || 0}%</div>
-          <div class="stat-label">Overall</div>
-        </div>
-        <div class="glass-card stat-card">
-          <div class="stat-value">${metrics.streak || 0} 🔥</div>
-          <div class="stat-label">Streak</div>
-        </div>
-        <div class="glass-card stat-card">
-          <div class="stat-value">${sessions.length}</div>
-          <div class="stat-label">Sessions</div>
-        </div>
-        <div class="glass-card stat-card">
-          <div class="stat-value">${metrics.days_elapsed || 0}</div>
-          <div class="stat-label">Days</div>
-        </div>
+    <!-- Inline Stats -->
+    <div class="cp-stats">
+      <div class="cp-stat">
+        <div class="cp-stat-value">${progress}%</div>
+        <div class="cp-stat-label">Overall</div>
       </div>
+      <div class="cp-stat">
+        <div class="cp-stat-value red">${metrics.streak || 0}</div>
+        <div class="cp-stat-label">Streak</div>
+      </div>
+      <div class="cp-stat">
+        <div class="cp-stat-value">${sessions.length}</div>
+        <div class="cp-stat-label">Sessions</div>
+      </div>
+      <div class="cp-stat">
+        <div class="cp-stat-value green">${metrics.days_elapsed || 0}</div>
+        <div class="cp-stat-label">Days</div>
+      </div>
+    </div>
 
-      <!-- Session Log -->
-      <div class="glass-card p-5 mb-8">
-        <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Session History</h2>
-        ${sessions.length === 0 ? '<p class="text-gray-500 text-sm">No sessions logged yet. Use /goal:log to record work.</p>' : ''}
-        <div class="space-y-4">
-          ${sessions.reverse().map(s => `
-            <div class="p-4 rounded-lg bg-white/[0.02] border border-white/5">
-              <div class="flex justify-between items-start mb-2">
-                <span class="font-medium text-gray-200">${escapeHtml(s.title)}</span>
-                <div class="flex gap-2">
-                  ${s.duration ? `<span class="badge badge-blue">${escapeHtml(s.duration)}</span>` : ''}
-                  ${s.progressGain ? `<span class="badge badge-green">${escapeHtml(s.progressGain)}</span>` : ''}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Session List (Load Game style) -->
+      <div class="lg:col-span-2">
+        <div class="cp-section">
+          <div class="cp-section-header">SESSION_LOG <span class="cp-count">${sessions.length} ENTRIES</span></div>
+          ${sessions.length === 0 ? `
+            <div class="py-8 text-center font-mono text-sm text-cp-dim">NO SESSIONS RECORDED</div>
+          ` : `
+            ${sessions.reverse().map((s, i) => `
+              <div class="cp-row" style="flex-direction: column; align-items: stretch;">
+                <div class="flex items-center justify-between">
+                  <span class="cp-row-title">${escapeHtml(s.title)}</span>
+                  <div class="flex gap-2">
+                    ${s.duration ? `<span class="cp-badge cp-badge-cyan">${escapeHtml(s.duration)}</span>` : ''}
+                    ${s.progressGain ? `<span class="cp-badge cp-badge-green">${escapeHtml(s.progressGain)}</span>` : ''}
+                  </div>
                 </div>
+                ${s.summary ? `<div class="font-body text-xs text-cp-text mt-1">${escapeHtml(s.summary)}</div>` : ''}
+                ${s.accomplishments.length ? `
+                  <div class="mt-2 space-y-1">
+                    ${s.accomplishments.slice(0, 5).map(a => `
+                      <div class="flex items-start gap-2 text-xs">
+                        <span class="text-cp-green font-mono mt-0.5">+</span>
+                        <span class="text-cp-dim font-body">${escapeHtml(a)}</span>
+                      </div>
+                    `).join('')}
+                    ${s.accomplishments.length > 5 ? `<div class="text-[10px] font-mono text-cp-dim">+${s.accomplishments.length - 5} more...</div>` : ''}
+                  </div>
+                ` : ''}
               </div>
-              ${s.summary ? `<p class="text-sm text-gray-400 mb-2">${escapeHtml(s.summary)}</p>` : ''}
-              ${s.accomplishments.length ? `
-                <ul class="text-xs text-gray-500 space-y-1">
-                  ${s.accomplishments.slice(0, 5).map(a => `<li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">+</span>${escapeHtml(a)}</li>`).join('')}
-                  ${s.accomplishments.length > 5 ? `<li class="text-gray-600">+${s.accomplishments.length - 5} more...</li>` : ''}
-                </ul>
-              ` : ''}
-            </div>
-          `).join('')}
+            `).join('')}
+          `}
         </div>
       </div>
 
       <!-- Milestones -->
-      ${milestones.length ? `
-      <div class="glass-card p-5">
-        <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Milestones</h2>
-        <div class="space-y-2">
-          ${milestones.map(m => `
-            <div class="flex items-center gap-3 text-sm">
-              <span class="${m.done ? 'text-green-400' : 'text-gray-600'}">${m.done ? '✅' : '⬜'}</span>
-              <span class="${m.done ? 'text-gray-400 line-through' : 'text-gray-300'}">${escapeHtml(m.text)}</span>
-              <span class="text-xs text-gray-600 ml-auto">${escapeHtml(m.phase)}</span>
-            </div>
-          `).join('')}
+      <div>
+        <div class="cp-section">
+          <div class="cp-section-header green">MILESTONES</div>
+          ${milestones.length === 0 ? `
+            <div class="py-6 text-center text-xs font-mono text-cp-dim">NO MILESTONES DEFINED</div>
+          ` : `
+            ${milestones.map(m => `
+              <div class="flex items-start gap-3 py-2">
+                <div class="mt-1">
+                  ${m.done
+                    ? '<div class="cp-dot active"></div>'
+                    : '<div class="cp-dot cold"></div>'
+                  }
+                </div>
+                <div>
+                  <div class="text-xs font-body ${m.done ? 'text-cp-green' : 'text-cp-text'}">${escapeHtml(m.text).slice(0, 60)}</div>
+                  <div class="text-[9px] font-mono text-cp-dim mt-0.5">${escapeHtml(m.phase).replace(/Phase \d+:?\s*/i, 'P')}</div>
+                </div>
+              </div>
+            `).join('')}
+          `}
         </div>
-      </div>` : ''}
+      </div>
     </div>
   `;
 }

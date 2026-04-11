@@ -1,60 +1,56 @@
 /**
- * Empty state - shown when no goal is set
+ * EMPTY STATE // No Goal Set
+ * CP2077 style onboarding
  */
 
 function renderEmpty() {
   const el = document.getElementById('page-empty');
   el.innerHTML = `
-    <div class="max-w-2xl mx-auto text-center py-20">
-      <div class="text-6xl mb-6">🎯</div>
-      <h1 class="text-3xl font-bold mb-4">No Goal Set Yet</h1>
-      <p class="text-gray-400 mb-8 text-lg">
-        Set your first goal to start tracking progress, creating content, and building your network.
-      </p>
-
-      <div class="glass-card p-6 text-left mb-8">
-        <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Getting Started</h2>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3">
-            <span class="text-accent font-mono text-sm mt-0.5">1</span>
-            <div>
-              <div class="text-gray-200 font-medium">Open Claude Code</div>
-              <div class="text-sm text-gray-400">In any project directory</div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-accent font-mono text-sm mt-0.5">2</span>
-            <div>
-              <div class="text-gray-200 font-medium">Run the set command</div>
-              <code class="text-sm text-accent bg-accent/10 px-2 py-1 rounded mt-1 inline-block">/goal:set "Your goal here"</code>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-accent font-mono text-sm mt-0.5">3</span>
-            <div>
-              <div class="text-gray-200 font-medium">Follow the prompts</div>
-              <div class="text-sm text-gray-400">It will ask about your background, skills, and social profiles</div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-accent font-mono text-sm mt-0.5">4</span>
-            <div>
-              <div class="text-gray-200 font-medium">Refresh this page</div>
-              <div class="text-sm text-gray-400">The dashboard will auto-detect your goal files</div>
-            </div>
-          </div>
-        </div>
+    <div class="max-w-lg mx-auto py-16">
+      <!-- Diamond icon -->
+      <div class="flex justify-center mb-8">
+        <div style="width: 40px; height: 40px; background: #e83535; transform: rotate(45deg); opacity: 0.6;"></div>
       </div>
 
-      <div class="glass-card p-6 text-left">
-        <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Example Goals</h2>
-        <div class="space-y-2 text-sm">
-          <div class="text-gray-400">🏆 "Become a Google Developer Expert in Flutter"</div>
-          <div class="text-gray-400">💼 "Land a senior engineering role at Google"</div>
-          <div class="text-gray-400">🎬 "Grow my YouTube channel to 100k subscribers"</div>
-          <div class="text-gray-400">💰 "Start freelancing and get 5 clients"</div>
-          <div class="text-gray-400">🌐 "Become a recognized open source maintainer"</div>
-        </div>
+      <h1 class="font-display font-bold text-2xl text-white tracking-wider uppercase text-center mb-3">NO MISSION DETECTED</h1>
+      <p class="text-sm text-cp-dim font-body text-center mb-8">
+        Initialize a mission objective to activate the command center.
+      </p>
+
+      <div class="cp-section">
+        <div class="cp-section-header">INITIALIZATION_PROTOCOL</div>
+        ${[
+          { step: '01', title: 'Open Claude Code', desc: 'In any project directory' },
+          { step: '02', title: 'Execute command', desc: '/goal:set "Your mission objective"', isCode: true },
+          { step: '03', title: 'Complete briefing', desc: 'Provide background, skills, social profiles' },
+          { step: '04', title: 'Refresh dashboard', desc: 'System will auto-detect mission files' }
+        ].map(s => `
+          <div class="cp-row">
+            <span class="font-display text-lg font-bold text-cp-red" style="min-width: 28px">${s.step}</span>
+            <div>
+              <div class="text-sm font-semibold text-white font-body">${s.title}</div>
+              ${s.isCode
+                ? `<code class="text-xs font-mono text-cp-cyan">${s.desc}</code>`
+                : `<div class="text-xs text-cp-dim font-body">${s.desc}</div>`
+              }
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="cp-section">
+        <div class="cp-section-header cyan">EXAMPLE_MISSIONS</div>
+        ${[
+          '\u{1F3C6} Become a Google Developer Expert in Flutter',
+          '\u{1F4BC} Land a senior engineering role at Google',
+          '\u{1F3AC} Grow YouTube channel to 100k subscribers',
+          '\u{1F4B0} Start freelancing and get 5 clients',
+          '\u{1F310} Become a recognized open source maintainer'
+        ].map(e => `
+          <div class="cp-row">
+            <span class="text-xs text-cp-text font-body">${e}</span>
+          </div>
+        `).join('')}
       </div>
     </div>
   `;

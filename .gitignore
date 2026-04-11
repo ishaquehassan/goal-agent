@@ -1,0 +1,23 @@
+# Goal state files (user-specific, created by /goal:set)
+goal-definition.md
+goal-profile.md
+strategy-roadmap.md
+progress-tracker.md
+content-calendar.md
+contacts-network.md
+research-findings.md
+blockers.md
+engagement-log.md
+profile-audit.md
+natural-content-rules.md
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

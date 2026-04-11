@@ -48,32 +48,34 @@ else
   fi
 fi
 
-echo -e "${YELLOW}Downloading Goal Agent...${NC}"
-
-# Clone to temp
-TEMP_DIR=$(mktemp -d)
-trap "rm -rf $TEMP_DIR" EXIT
-git clone --depth 1 --quiet https://github.com/ishaquehassan/goal-agent.git "$TEMP_DIR/goal-agent"
-
-echo -e "${YELLOW}Installing plugin...${NC}"
-
-# Install as plugin
+# Setup directories
 CLAUDE_DIR="$HOME/.claude"
 PLUGIN_DIR="$CLAUDE_DIR/plugins/data/goal-agent@ishaquehassan"
+COMMANDS_DIR="$CLAUDE_DIR/commands/goal"
+AGENTS_DIR="$CLAUDE_DIR/agents"
 
-# Clean previous install
-if [ -d "$PLUGIN_DIR" ]; then
+# Install or update plugin (git-based)
+if [ -d "$PLUGIN_DIR/.git" ]; then
+  echo -e "${YELLOW}Existing installation found. Updating...${NC}"
+  cd "$PLUGIN_DIR"
+  git fetch origin main
+  git reset --hard origin/main
+elif [ -d "$PLUGIN_DIR" ]; then
+  echo -e "${YELLOW}Upgrading to git-based install...${NC}"
   rm -rf "$PLUGIN_DIR"
+  mkdir -p "$(dirname "$PLUGIN_DIR")"
+  git clone --quiet https://github.com/ishaquehassan/goal-agent.git "$PLUGIN_DIR"
+else
+  echo -e "${YELLOW}Installing Goal Agent...${NC}"
+  mkdir -p "$(dirname "$PLUGIN_DIR")"
+  git clone --quiet https://github.com/ishaquehassan/goal-agent.git "$PLUGIN_DIR"
 fi
 
-mkdir -p "$PLUGIN_DIR"
-cp -r "$TEMP_DIR/goal-agent/." "$PLUGIN_DIR/"
-
-# Copy skills as commands for immediate use
-COMMANDS_DIR="$CLAUDE_DIR/commands/goal"
+# Sync skills as commands
+echo -e "${YELLOW}Syncing commands...${NC}"
 mkdir -p "$COMMANDS_DIR"
 
-for skill_dir in "$TEMP_DIR/goal-agent/skills/goal"/*/; do
+for skill_dir in "$PLUGIN_DIR/skills/goal"/*/; do
   if [ -d "$skill_dir" ]; then
     skill_name=$(basename "$skill_dir")
     if [ -f "$skill_dir/SKILL.md" ]; then
@@ -82,23 +84,20 @@ for skill_dir in "$TEMP_DIR/goal-agent/skills/goal"/*/; do
   fi
 done
 
-# Copy dashboard
-echo -e "${YELLOW}Setting up dashboard...${NC}"
-DASHBOARD_DIR="$PLUGIN_DIR/dashboard"
-if [ -d "$DASHBOARD_DIR" ]; then
-  rm -rf "$DASHBOARD_DIR"
-fi
-cp -r "$TEMP_DIR/goal-agent/dashboard" "$DASHBOARD_DIR"
-
-# Copy agents
-AGENTS_DIR="$CLAUDE_DIR/agents"
+# Sync agents
 mkdir -p "$AGENTS_DIR"
-if [ -d "$TEMP_DIR/goal-agent/agents" ]; then
-  cp "$TEMP_DIR/goal-agent/agents/"*.md "$AGENTS_DIR/" 2>/dev/null || true
+if [ -d "$PLUGIN_DIR/agents" ]; then
+  cp "$PLUGIN_DIR/agents/"*.md "$AGENTS_DIR/" 2>/dev/null || true
+fi
+
+# Show version
+VERSION="unknown"
+if [ -f "$PLUGIN_DIR/version.json" ]; then
+  VERSION=$(grep '"version"' "$PLUGIN_DIR/version.json" | head -1 | sed 's/.*: *"\(.*\)".*/\1/')
 fi
 
 echo ""
-echo -e "${GREEN}Goal Agent installed successfully!${NC}"
+echo -e "${GREEN}Goal Agent v${VERSION} installed successfully!${NC}"
 echo ""
 echo -e "${CYAN}Quick Start:${NC}"
 echo "  1. Open any project with Claude Code"
@@ -120,6 +119,11 @@ echo "  /goal:write      Create and publish content (needs browser)"
 echo "  /goal:engage     Engage with target audience (needs browser)"
 echo "  /goal:contacts   Manage your network"
 echo "  /goal:calendar   Content calendar"
+echo "  /goal:update     Update to latest version"
+echo ""
+echo -e "${CYAN}Update:${NC}"
+echo "  /goal:update     Update plugin from within Claude Code"
+echo "  Or run: curl -sL https://raw.githubusercontent.com/ishaquehassan/goal-agent/main/update.sh | bash"
 echo ""
 echo -e "${YELLOW}Browser Automation (optional):${NC}"
 echo "  Install 'Claude in Chrome' extension in Chrome or Brave"

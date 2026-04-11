@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Goal Agent Dashboard</title>
+  <title>GOAL AGENT // COMMAND CENTER</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -11,71 +11,92 @@
       theme: {
         extend: {
           colors: {
-            surface: { DEFAULT: '#0f172a', card: '#1e293b', hover: '#334155' },
-            accent: { DEFAULT: '#3b82f6', glow: '#60a5fa' }
+            cp: {
+              bg: '#0c0c10',
+              surface: '#121218',
+              border: '#2a2a3a',
+              cyan: '#00d4ff',
+              red: '#e83535',
+              green: '#3dd83d',
+              blue: '#0066ff',
+              text: '#e0ddd5',
+              dim: '#6a6a78',
+              muted: '#3a3a4a',
+            }
+          },
+          fontFamily: {
+            display: ['"Rajdhani"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"SF Mono"', 'Consolas', 'monospace'],
+            body: ['"Rajdhani"', '"Inter"', 'sans-serif'],
           }
         }
       }
     }
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-surface text-gray-100 min-h-screen font-sans antialiased">
+<body class="bg-cp-bg text-cp-text h-screen font-body antialiased overflow-hidden flex flex-col">
 
-  <!-- Top Nav -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <span class="text-xl">🎯</span>
-        <span class="font-bold text-lg">Goal Agent</span>
-        <span id="nav-goal-name" class="text-sm text-gray-400 ml-2"></span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span id="nav-status" class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">Connected</span>
-        <span id="nav-progress" class="text-sm font-mono text-accent"></span>
-      </div>
-    </div>
-  </nav>
+  <!-- Top Navigation: CP2077-style horizontal tabs -->
+  <nav class="cp-nav">
+    <div class="flex items-center h-full px-6 gap-1">
+      <!-- Logo diamond -->
+      <div class="cp-diamond mr-4"></div>
 
-  <!-- Sidebar + Content -->
-  <div class="flex pt-14">
-    <!-- Sidebar -->
-    <aside class="fixed left-0 top-14 bottom-0 w-56 glass-sidebar border-r border-white/5 p-3 flex flex-col gap-1">
-      <a href="#overview" class="nav-link active" data-page="overview">
-        <span>📊</span> Overview
-      </a>
-      <a href="#progress" class="nav-link" data-page="progress">
-        <span>📈</span> Progress
-      </a>
-      <a href="#calendar" class="nav-link" data-page="calendar">
-        <span>📅</span> Calendar
-      </a>
-      <a href="#network" class="nav-link" data-page="network">
-        <span>👥</span> Network
-      </a>
-      <a href="#commands" class="nav-link" data-page="commands">
-        <span>⚡</span> Commands
-      </a>
+      <!-- Tab items -->
+      <a href="#overview" class="cp-tab active" data-page="overview">CMD</a>
+      <a href="#progress" class="cp-tab" data-page="progress">OPS</a>
+      <a href="#calendar" class="cp-tab" data-page="calendar">INTEL</a>
+      <a href="#network" class="cp-tab" data-page="network">NET</a>
+      <a href="#commands" class="cp-tab" data-page="commands">TERM</a>
 
-      <div class="mt-auto pt-4 border-t border-white/5">
-        <div class="text-xs text-gray-500 px-3">
-          <div id="sidebar-days" class="mb-1"></div>
-          <div id="sidebar-streak" class="mb-1"></div>
-          <div id="sidebar-phase" class=""></div>
+      <!-- Right side: system info -->
+      <div class="ml-auto flex items-center gap-6">
+        <span id="nav-goal-name" class="font-mono text-[11px] text-cp-dim tracking-wider uppercase"></span>
+        <span id="nav-clock" class="font-mono text-[11px] text-cp-dim tracking-widest"></span>
+        <div class="flex items-center gap-2">
+          <span id="nav-progress" class="font-display font-bold text-sm text-cp-cyan"></span>
+        </div>
+        <div id="nav-status" class="flex items-center gap-1.5">
+          <div class="w-1.5 h-1.5 rounded-full bg-cp-green animate-pulse"></div>
+          <span class="text-[10px] font-mono text-cp-green tracking-wider uppercase">LIVE</span>
         </div>
       </div>
-    </aside>
+    </div>
+    <!-- Active tab indicator line -->
+    <div class="cp-tab-line"></div>
+  </nav>
 
-    <!-- Main Content -->
-    <main class="ml-56 flex-1 p-6 min-h-screen">
-      <div id="page-overview" class="page"></div>
-      <div id="page-progress" class="page hidden"></div>
-      <div id="page-calendar" class="page hidden"></div>
-      <div id="page-network" class="page hidden"></div>
-      <div id="page-commands" class="page hidden"></div>
-      <div id="page-empty" class="page hidden"></div>
-    </main>
-  </div>
+  <!-- Main Content Area -->
+  <main class="flex-1 min-h-0 overflow-y-auto" id="main-content">
+    <div id="page-overview" class="page px-8 py-6 max-w-6xl mx-auto"></div>
+    <div id="page-progress" class="page hidden px-8 py-6 max-w-6xl mx-auto"></div>
+    <div id="page-calendar" class="page hidden px-8 py-6 max-w-6xl mx-auto"></div>
+    <div id="page-network" class="page hidden px-8 py-6 max-w-6xl mx-auto"></div>
+    <div id="page-commands" class="page hidden px-4 py-2"></div>
+    <div id="page-empty" class="page hidden px-8 py-6 max-w-3xl mx-auto"></div>
+  </main>
+
+  <!-- Bottom Action Bar: CP2077-style controller hints -->
+  <footer class="cp-bottom-bar">
+    <div class="flex items-center justify-between px-6 h-full">
+      <div class="flex items-center gap-6">
+        <span id="sidebar-days" class="font-display font-bold text-cp-cyan">0</span>
+        <span class="text-[10px] font-mono text-cp-dim uppercase tracking-wider">DAYS</span>
+        <span class="text-cp-muted">|</span>
+        <span id="sidebar-streak" class="font-display font-bold text-cp-red">0</span>
+        <span class="text-[10px] font-mono text-cp-dim uppercase tracking-wider">STREAK</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="cp-hint"><span class="cp-hint-key">Ctrl+K</span> Search</div>
+        <div class="cp-hint"><span class="cp-hint-key">Enter</span> Execute</div>
+        <div class="cp-hint"><span class="cp-hint-key">Esc</span> Close</div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Scripts -->
   <script src="/js/components/overview.js"></script>
