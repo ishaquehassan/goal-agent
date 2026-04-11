@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "released": "2026-04-11",
-  "changelog": "CP2077 UI revamp, dangerously-skip-permissions for dashboard commands, write command browser support, auto-update system"
+  "changelog": "Enhanced LinkedIn comment naturalness rules, banned owner/repo format in all external content, added BAD vs GOOD examples, casual tone markers, AI detection patterns"
 }

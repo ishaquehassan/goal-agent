@@ -220,6 +220,7 @@ Use `get_page_text` to read the complete post. Expand "...see more" if needed.
 6. NEVER use em dashes
 7. Developer/professional tone, not corporate
 8. If someone reads all your comments on the same day, NO pattern should be visible
+9. NEVER use GitHub repo path format (owner/repo) like "flutter/flutter", "google/mediapipe", "vercel/next.js". Real humans say "flutter", "mediapipe", "Next.js". Just use the project name, not the GitHub path. This applies to ALL repos everywhere.
 
 ### 4h. Post the Comment
 ```javascript
