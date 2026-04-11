@@ -84,6 +84,10 @@ Write a full article following these rules:
 - Use the user's real achievements and projects as examples
 - No AI-sounding phrases ("In this comprehensive guide...", "Let's dive deep...")
 - Write like a developer sharing experience, not a tutorial factory
+- Light humor where it fits naturally (dev frustrations, self-deprecating moments, relatable struggles)
+- Emojis only where they add value, not forced decoration
+- NEVER use GitHub repo path format (owner/repo). Say "flutter" not "flutter/flutter", "react" not "facebook/react"
+- Casual tone markers OK in posts/articles too: "honestly", "turns out", "the thing is"
 
 **SEO:**
 - Include goal-relevant keywords naturally

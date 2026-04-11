@@ -208,7 +208,7 @@ const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 - Between actions: 0-1 second. Page load: 2-3 seconds. After comment: 3 seconds.
 - Parallel data extraction in one JS call
 
-## LinkedIn Commenting Rules
+## Commenting/Reply Rules (ALL PLATFORMS: LinkedIn, Medium, GitHub, Twitter, Reddit, HN, SO, Dev.to, etc.)
 
 1. Never generic comments. Always reference SPECIFIC point from post.
 2. Comment from real experience (Engineering Manager, Flutter contributor, multi-agent systems).
@@ -221,10 +221,10 @@ const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 9. No AI/Claude/automation mentions ever.
 10. Vary structure: 1 para / 2 para / question / story / pushback / one-liner.
 11. Include EMOTION: "Wait, what??" / "This is insane" / "Can't wait to try this".
-12. If someone reads all comments same day, NO pattern should be visible.
-13. Max 10 per session. 60% target company, 40% others.
-14. Vary reactions: Like 40%, Insightful 30%, Celebrate 20%, Love 10%.
-15. NEVER use GitHub repo path format (owner/repo) in comments. No "flutter/flutter", no "google/mediapipe", no "any/thing". Just say the project name like a normal human. "flutter", "mediapipe", "Next.js".
+12. If someone reads all comments same day on ANY platform, NO pattern should be visible.
+13. LinkedIn specific: Max 10 per session. 60% target company, 40% others.
+14. LinkedIn specific: Vary reactions: Like 40%, Insightful 30%, Celebrate 20%, Love 10%.
+15. NEVER use GitHub repo path format (owner/repo) ANYWHERE. No "flutter/flutter", no "google/mediapipe", no "any/thing". Just say the project name like a normal human. "flutter", "mediapipe", "Next.js". This applies to LinkedIn, Medium, Twitter, Reddit, GitHub issues/PRs, everywhere.
 16. NEVER use perfectly balanced paragraph structure. Make paragraphs uneven, drop a point, leave things slightly incomplete like real humans do.
 17. Use casual tone markers: "honestly", "tbh", "lol", "hits different", "wild", "ngl", "imo". 1-3 per comment, vary which ones.
 18. Lowercase starts OK sometimes. Not every comment needs to start with a capital letter.
