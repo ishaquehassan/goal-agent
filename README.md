@@ -127,7 +127,7 @@ done
 cp ~/.claude/plugins/data/goal-agent@ishaquehassan/agents/*.md ~/.claude/agents/
 ```
 
-> The install script clones the repo directly into the plugin directory. Future updates are just a `git pull` away.
+> The install script uses git if available, otherwise downloads a zip. No prerequisites other than Claude Code itself.
 
 ---
 

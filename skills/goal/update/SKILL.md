@@ -11,7 +11,6 @@ You are the Goal Agent updater. Update the plugin to the latest version from Git
 ## Step 1: Detect Current Installation
 
 ```bash
-# Check if plugin dir exists and is a git repo
 PLUGIN_DIR="$HOME/.claude/plugins/data/goal-agent@ishaquehassan"
 
 if [ -d "$PLUGIN_DIR/.git" ]; then
@@ -36,7 +35,11 @@ If already on latest, tell user "Already on latest version X.Y.Z" and stop.
 
 ## Step 4: Update Based on Install Type
 
-### If GIT_INSTALL (git repo exists):
+Check if git is available: `command -v git`
+
+### If git is available:
+
+**GIT_INSTALL (git repo exists):**
 ```bash
 PLUGIN_DIR="$HOME/.claude/plugins/data/goal-agent@ishaquehassan"
 cd "$PLUGIN_DIR"
@@ -44,14 +47,24 @@ git fetch origin main
 git reset --hard origin/main
 ```
 
-### If COPY_INSTALL (old style, no git):
+**COPY_INSTALL (old style, no git):**
 ```bash
 PLUGIN_DIR="$HOME/.claude/plugins/data/goal-agent@ishaquehassan"
-# Remove old copy-based install
 rm -rf "$PLUGIN_DIR"
-# Clone fresh as git repo
 mkdir -p "$(dirname "$PLUGIN_DIR")"
 git clone https://github.com/ishaquehassan/goal-agent.git "$PLUGIN_DIR"
+```
+
+### If git is NOT available (zip fallback):
+```bash
+PLUGIN_DIR="$HOME/.claude/plugins/data/goal-agent@ishaquehassan"
+TEMP_DIR=$(mktemp -d)
+curl -sL "https://github.com/ishaquehassan/goal-agent/archive/refs/heads/main.zip" -o "$TEMP_DIR/goal-agent.zip"
+unzip -q "$TEMP_DIR/goal-agent.zip" -d "$TEMP_DIR"
+rm -rf "$PLUGIN_DIR"
+mkdir -p "$(dirname "$PLUGIN_DIR")"
+mv "$TEMP_DIR/goal-agent-main" "$PLUGIN_DIR"
+rm -rf "$TEMP_DIR"
 ```
 
 ### If NOT_INSTALLED:
@@ -101,3 +114,4 @@ Detect OS and use appropriate commands:
 - NEVER ask for confirmation, just update
 - If git pull fails due to conflicts, do `git fetch && git reset --hard origin/main`
 - If any step fails, show the error and suggest manual reinstall
+- If git is not available, always use zip download fallback

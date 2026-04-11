@@ -7,6 +7,9 @@ RED='\033[0;31m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+REPO_URL="https://github.com/ishaquehassan/goal-agent"
+ZIP_URL="$REPO_URL/archive/refs/heads/main.zip"
+
 echo ""
 echo -e "${CYAN}================================${NC}"
 echo -e "${CYAN}  Goal Agent for Claude Code${NC}"
@@ -23,11 +26,10 @@ if ! command -v claude &> /dev/null; then
   exit 1
 fi
 
-# Check git
-if ! command -v git &> /dev/null; then
-  echo -e "${RED}ERROR: git not found.${NC}"
-  echo "Please install git first."
-  exit 1
+# Detect git
+HAS_GIT=false
+if command -v git &> /dev/null; then
+  HAS_GIT=true
 fi
 
 # Check Node.js (needed for dashboard)
@@ -37,14 +39,10 @@ if ! command -v node &> /dev/null; then
   echo "  Install: https://nodejs.org or 'brew install node'"
   echo "  All CLI commands will work without it."
   echo ""
-  HAS_NODE=false
 else
   NODE_VER=$(node -e "console.log(process.version.slice(1).split('.')[0])")
   if [ "$NODE_VER" -lt 18 ]; then
     echo -e "${YELLOW}WARNING: Node.js $NODE_VER found, dashboard needs 18+.${NC}"
-    HAS_NODE=false
-  else
-    HAS_NODE=true
   fi
 fi
 
@@ -54,21 +52,55 @@ PLUGIN_DIR="$CLAUDE_DIR/plugins/data/goal-agent@ishaquehassan"
 COMMANDS_DIR="$CLAUDE_DIR/commands/goal"
 AGENTS_DIR="$CLAUDE_DIR/agents"
 
-# Install or update plugin (git-based)
-if [ -d "$PLUGIN_DIR/.git" ]; then
-  echo -e "${YELLOW}Existing installation found. Updating...${NC}"
-  cd "$PLUGIN_DIR"
-  git fetch origin main
-  git reset --hard origin/main
-elif [ -d "$PLUGIN_DIR" ]; then
-  echo -e "${YELLOW}Upgrading to git-based install...${NC}"
+# Function: download via zip (no git needed)
+install_via_zip() {
+  echo -e "${YELLOW}Downloading Goal Agent (zip)...${NC}"
+  TEMP_DIR=$(mktemp -d)
+  trap "rm -rf $TEMP_DIR" EXIT
+
+  if command -v curl &> /dev/null; then
+    curl -sL "$ZIP_URL" -o "$TEMP_DIR/goal-agent.zip"
+  elif command -v wget &> /dev/null; then
+    wget -q "$ZIP_URL" -O "$TEMP_DIR/goal-agent.zip"
+  else
+    echo -e "${RED}ERROR: Neither curl nor wget found. Cannot download.${NC}"
+    exit 1
+  fi
+
+  # Extract
+  if command -v unzip &> /dev/null; then
+    unzip -q "$TEMP_DIR/goal-agent.zip" -d "$TEMP_DIR"
+  else
+    echo -e "${RED}ERROR: unzip not found. Cannot extract.${NC}"
+    exit 1
+  fi
+
+  # Move extracted folder to plugin dir
   rm -rf "$PLUGIN_DIR"
   mkdir -p "$(dirname "$PLUGIN_DIR")"
-  git clone --quiet https://github.com/ishaquehassan/goal-agent.git "$PLUGIN_DIR"
+  mv "$TEMP_DIR/goal-agent-main" "$PLUGIN_DIR"
+}
+
+# Install or update
+if [ "$HAS_GIT" = true ]; then
+  if [ -d "$PLUGIN_DIR/.git" ]; then
+    echo -e "${YELLOW}Existing installation found. Updating...${NC}"
+    cd "$PLUGIN_DIR"
+    git fetch origin main
+    git reset --hard origin/main
+  elif [ -d "$PLUGIN_DIR" ]; then
+    echo -e "${YELLOW}Upgrading to git-based install...${NC}"
+    rm -rf "$PLUGIN_DIR"
+    mkdir -p "$(dirname "$PLUGIN_DIR")"
+    git clone --quiet "$REPO_URL.git" "$PLUGIN_DIR"
+  else
+    echo -e "${YELLOW}Installing Goal Agent...${NC}"
+    mkdir -p "$(dirname "$PLUGIN_DIR")"
+    git clone --quiet "$REPO_URL.git" "$PLUGIN_DIR"
+  fi
 else
-  echo -e "${YELLOW}Installing Goal Agent...${NC}"
-  mkdir -p "$(dirname "$PLUGIN_DIR")"
-  git clone --quiet https://github.com/ishaquehassan/goal-agent.git "$PLUGIN_DIR"
+  echo -e "${YELLOW}git not found, using zip download...${NC}"
+  install_via_zip
 fi
 
 # Sync skills as commands

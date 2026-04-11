@@ -1,5 +1,8 @@
 $ErrorActionPreference = "Stop"
 
+$repoUrl = "https://github.com/ishaquehassan/goal-agent"
+$zipUrl = "$repoUrl/archive/refs/heads/main.zip"
+
 Write-Host ""
 Write-Host "================================" -ForegroundColor Cyan
 Write-Host "  Goal Agent for Claude Code" -ForegroundColor Cyan
@@ -17,17 +20,11 @@ if (-not $claudePath) {
     exit 1
 }
 
-# Check git
-$gitPath = Get-Command git -ErrorAction SilentlyContinue
-if (-not $gitPath) {
-    Write-Host "ERROR: git not found." -ForegroundColor Red
-    Write-Host "Please install git first."
-    exit 1
-}
+# Detect git
+$hasGit = $null -ne (Get-Command git -ErrorAction SilentlyContinue)
 
 # Check Node.js (needed for dashboard)
 $nodePath = Get-Command node -ErrorAction SilentlyContinue
-$hasNode = $false
 if (-not $nodePath) {
     Write-Host "WARNING: Node.js not found." -ForegroundColor Yellow
     Write-Host "  Dashboard requires Node.js 18+."
@@ -38,8 +35,6 @@ if (-not $nodePath) {
     $nodeVer = [int](node -e "console.log(process.version.slice(1).split('.')[0])")
     if ($nodeVer -lt 18) {
         Write-Host "WARNING: Node.js $nodeVer found, dashboard needs 18+." -ForegroundColor Yellow
-    } else {
-        $hasNode = $true
     }
 }
 
@@ -49,25 +44,52 @@ $pluginDir = Join-Path $claudeDir "plugins\data\goal-agent@ishaquehassan"
 $commandsDir = Join-Path $claudeDir "commands\goal"
 $agentsDir = Join-Path $claudeDir "agents"
 
-# Install or update plugin (git-based)
+# Function: install via zip
+function Install-ViaZip {
+    Write-Host "Downloading Goal Agent (zip)..." -ForegroundColor Yellow
+    $tempDir = Join-Path $env:TEMP "goal-agent-install-$(Get-Random)"
+    New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
+    $zipFile = Join-Path $tempDir "goal-agent.zip"
+
+    try {
+        Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile -UseBasicParsing
+        Expand-Archive -Path $zipFile -DestinationPath $tempDir -Force
+
+        if (Test-Path $pluginDir) {
+            Remove-Item -Recurse -Force $pluginDir
+        }
+        $parentDir = Split-Path $pluginDir -Parent
+        New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
+        Move-Item (Join-Path $tempDir "goal-agent-main") $pluginDir
+    } finally {
+        Remove-Item -Recurse -Force $tempDir -ErrorAction SilentlyContinue
+    }
+}
+
+# Install or update
 $gitDir = Join-Path $pluginDir ".git"
-if (Test-Path $gitDir) {
-    Write-Host "Existing installation found. Updating..." -ForegroundColor Yellow
-    Push-Location $pluginDir
-    git fetch origin main
-    git reset --hard origin/main
-    Pop-Location
-} elseif (Test-Path $pluginDir) {
-    Write-Host "Upgrading to git-based install..." -ForegroundColor Yellow
-    Remove-Item -Recurse -Force $pluginDir
-    $parentDir = Split-Path $pluginDir -Parent
-    New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
-    git clone --quiet https://github.com/ishaquehassan/goal-agent.git $pluginDir
+if ($hasGit) {
+    if (Test-Path $gitDir) {
+        Write-Host "Existing installation found. Updating..." -ForegroundColor Yellow
+        Push-Location $pluginDir
+        git fetch origin main
+        git reset --hard origin/main
+        Pop-Location
+    } elseif (Test-Path $pluginDir) {
+        Write-Host "Upgrading to git-based install..." -ForegroundColor Yellow
+        Remove-Item -Recurse -Force $pluginDir
+        $parentDir = Split-Path $pluginDir -Parent
+        New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
+        git clone --quiet "$repoUrl.git" $pluginDir
+    } else {
+        Write-Host "Installing Goal Agent..." -ForegroundColor Yellow
+        $parentDir = Split-Path $pluginDir -Parent
+        New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
+        git clone --quiet "$repoUrl.git" $pluginDir
+    }
 } else {
-    Write-Host "Installing Goal Agent..." -ForegroundColor Yellow
-    $parentDir = Split-Path $pluginDir -Parent
-    New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
-    git clone --quiet https://github.com/ishaquehassan/goal-agent.git $pluginDir
+    Write-Host "git not found, using zip download..." -ForegroundColor Yellow
+    Install-ViaZip
 }
 
 # Sync commands

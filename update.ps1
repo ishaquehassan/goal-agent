@@ -1,5 +1,8 @@
 $ErrorActionPreference = "Stop"
 
+$repoUrl = "https://github.com/ishaquehassan/goal-agent"
+$zipUrl = "$repoUrl/archive/refs/heads/main.zip"
+
 $pluginDir = Join-Path $env:USERPROFILE ".claude\plugins\data\goal-agent@ishaquehassan"
 $commandsDir = Join-Path $env:USERPROFILE ".claude\commands\goal"
 $agentsDir = Join-Path $env:USERPROFILE ".claude\agents"
@@ -8,31 +11,55 @@ Write-Host ""
 Write-Host "Goal Agent Updater" -ForegroundColor Cyan
 Write-Host ""
 
-# Check git
-$gitPath = Get-Command git -ErrorAction SilentlyContinue
-if (-not $gitPath) {
-    Write-Host "ERROR: git not found." -ForegroundColor Red
-    exit 1
+# Function: update via zip
+function Update-ViaZip {
+    Write-Host "Downloading latest version (zip)..." -ForegroundColor Yellow
+    $tempDir = Join-Path $env:TEMP "goal-agent-update-$(Get-Random)"
+    New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
+    $zipFile = Join-Path $tempDir "goal-agent.zip"
+
+    try {
+        Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile -UseBasicParsing
+        Expand-Archive -Path $zipFile -DestinationPath $tempDir -Force
+
+        if (Test-Path $pluginDir) {
+            Remove-Item -Recurse -Force $pluginDir
+        }
+        $parentDir = Split-Path $pluginDir -Parent
+        New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
+        Move-Item (Join-Path $tempDir "goal-agent-main") $pluginDir
+    } finally {
+        Remove-Item -Recurse -Force $tempDir -ErrorAction SilentlyContinue
+    }
 }
 
-# Check installation type
-$gitDir = Join-Path $pluginDir ".git"
-if (Test-Path $gitDir) {
-    Write-Host "Pulling latest changes..." -ForegroundColor Yellow
-    Push-Location $pluginDir
-    git fetch origin main
-    git reset --hard origin/main
-    Pop-Location
-} elseif (Test-Path $pluginDir) {
-    Write-Host "Upgrading from copy-based to git-based install..." -ForegroundColor Yellow
-    Remove-Item -Recurse -Force $pluginDir
-    $parentDir = Split-Path $pluginDir -Parent
-    New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
-    git clone --quiet https://github.com/ishaquehassan/goal-agent.git $pluginDir
-} else {
+# Check not installed
+if (-not (Test-Path $pluginDir)) {
     Write-Host "Goal Agent not installed." -ForegroundColor Red
     Write-Host 'Install first: irm https://raw.githubusercontent.com/ishaquehassan/goal-agent/main/install.ps1 | iex'
     exit 1
+}
+
+# Update: prefer git, fallback to zip
+$hasGit = $null -ne (Get-Command git -ErrorAction SilentlyContinue)
+$gitDir = Join-Path $pluginDir ".git"
+
+if ($hasGit) {
+    if (Test-Path $gitDir) {
+        Write-Host "Pulling latest changes..." -ForegroundColor Yellow
+        Push-Location $pluginDir
+        git fetch origin main
+        git reset --hard origin/main
+        Pop-Location
+    } else {
+        Write-Host "Upgrading to git-based install..." -ForegroundColor Yellow
+        Remove-Item -Recurse -Force $pluginDir
+        $parentDir = Split-Path $pluginDir -Parent
+        New-Item -ItemType Directory -Force -Path $parentDir | Out-Null
+        git clone --quiet "$repoUrl.git" $pluginDir
+    }
+} else {
+    Update-ViaZip
 }
 
 # Sync commands
