@@ -9,7 +9,7 @@
 <br>
 
 [![Install in 10 seconds](https://img.shields.io/badge/⚡_Install_in_10_seconds-One_Liner-00C853?style=for-the-badge&labelColor=1a1a2e)](#install)
-[![Commands](https://img.shields.io/badge/Commands-12-blue?style=for-the-badge&labelColor=1a1a2e)](#all-commands-reference)
+[![Commands](https://img.shields.io/badge/Commands-13-blue?style=for-the-badge&labelColor=1a1a2e)](#all-commands-reference)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&labelColor=1a1a2e)](LICENSE)
 
 [![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
@@ -349,6 +349,7 @@ Three commands use browser automation to execute actions: `/goal:optimize`, `/go
 |---------|-------------|:--------------:|
 | `/goal:dashboard` | Open the live web dashboard | No |
 | `/goal:update` | Update to latest version | No |
+| `/goal:contribute` | Submit session learnings as PR to improve the plugin | No |
 
 ---
 

@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "released": "2026-04-15",
-  "changelog": "Complete LinkedIn comment automation rewrite: find+ref click method replaces scrollIntoView (fixes lightbox), mandatory emoji rule, comment quality hard rules, connection request quota handling, search strategy optimization for GDE targets, tab management fixes"
+  "changelog": "New /goal:contribute command for self-improving plugin (auto PR from session learnings), session-end contribution hard rule, dashboard contribute+update commands, 13 total commands"
 }

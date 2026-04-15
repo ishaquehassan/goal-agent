@@ -51,7 +51,7 @@ fileWatcher.onChange((filename) => {
 });
 
 // Allowed commands (whitelist)
-const ALLOWED_COMMANDS = ['set', 'next', 'status', 'log', 'research', 'optimize', 'write', 'engage', 'contacts', 'calendar'];
+const ALLOWED_COMMANDS = ['set', 'next', 'status', 'log', 'research', 'optimize', 'write', 'engage', 'contacts', 'calendar', 'contribute', 'update'];
 
 // ─── HTTP Server ───
 

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-This is the personal goal tracking workspace for achieving **Flutter Google Developer Expert (GDE)** status within 6 months (Apr 8 to Oct 8 2026). All state files live in this directory. The goal agent plugin is installed at `~/.claude/commands/goal/` with 10 slash commands.
+This is the personal goal tracking workspace for achieving **Flutter Google Developer Expert (GDE)** status within 6 months (Apr 8 to Oct 8 2026). All state files live in this directory. The goal agent plugin is installed at `~/.claude/commands/goal/` with 13 slash commands.
 
 **Plugin repo:** https://github.com/ishaquehassan/goal-agent
 **OSS Auto-Contributor repo:** https://github.com/ishaquehassan/oss-auto-contributor
@@ -21,6 +21,9 @@ This is the personal goal tracking workspace for achieving **Flutter Google Deve
 | `/goal:engage` | LinkedIn engagement (comment, follow, react) via browser |
 | `/goal:contacts` | Network tracker |
 | `/goal:calendar` | Content calendar |
+| `/goal:dashboard` | Open web dashboard |
+| `/goal:update` | Update plugin to latest version |
+| `/goal:contribute` | Submit session learnings as PR |
 
 ## State Files (This Directory)
 
@@ -299,3 +302,15 @@ When adding speaking events to profile: ALWAYS verify name on actual page before
 - **Roman Urdu** communication style with user
 - **Natural developer tone** in all external content
 - **Gaaliyan allowed** in conversation
+
+## Session End Rule (HARD RULE, NEVER SKIP)
+
+**At the END of EVERY session, BEFORE saying goodbye or ending conversation, you MUST:**
+
+1. Check if any plugin files changed during this session (CLAUDE.md, SKILL.md files, natural-content-rules.md, dashboard code, agents, install scripts)
+2. If changes detected, ask the user: "Is session mein kuch improvements hue hain plugin mein. Contribute karna chahoge repo mein as PR?"
+3. If user says yes: run `/goal:contribute` flow
+4. If user says no: move on
+5. If no changes detected: skip silently
+
+**This is NOT optional.** Every session, every time, no exceptions. The goal is to make the plugin self-improving through real usage. Even if the session was short, check for changes. Even if you think nothing important changed, ASK.

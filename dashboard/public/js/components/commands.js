@@ -26,7 +26,9 @@ const COMMAND_SPECS = [
 
   // SYSTEM
   { cmd: 'set', icon: '\u25CE', label: 'INIT GOAL', desc: 'Initialize a new mission', group: 'SYSTEM', color: '#e83535',
-    params: [{ name: 'args', label: 'Mission objective', type: 'textarea', placeholder: '"Become a Flutter GDE in 6 months"' }] }
+    params: [{ name: 'args', label: 'Mission objective', type: 'textarea', placeholder: '"Become a Flutter GDE in 6 months"' }] },
+  { cmd: 'contribute', icon: '\u2B06', label: 'CONTRIBUTE', desc: 'Submit session learnings as PR', group: 'SYSTEM', color: '#3dd83d', params: [] },
+  { cmd: 'update', icon: '\u21BB', label: 'UPDATE', desc: 'Update plugin to latest version', group: 'SYSTEM', color: '#00d4ff', params: [] }
 ];
 
 const GROUPS = ['QUICK OPS', 'CONTENT', 'NETWORK', 'SYSTEM'];
