@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.5.1",
   "released": "2026-04-15",
-  "changelog": "New /goal:contribute command for self-improving plugin (auto PR from session learnings), session-end contribution hard rule, dashboard contribute+update commands, 13 total commands"
+  "changelog": "Zero-friction contribute: auto GitHub auth (browser OAuth), SSH key gen+add, fork management, git config from API. Every error auto-recovers. No manual steps ever."
 }
