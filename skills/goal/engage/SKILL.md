@@ -24,20 +24,14 @@ Parse `$ARGUMENTS` for count. Default: 5. Maximum: 10 per session.
 
 ### Known Pitfalls (MUST READ):
 
-**1. Image/Video Lightbox Trap**
-- Scrolling through image or video areas triggers fullscreen lightbox overlay
-- This BLOCKS all further browser interactions
-- NEVER use scrollIntoView that passes through image/video areas
-- If lightbox activates: reload the page
-- Prevention JS (run on every post page):
-  ```javascript
-  document.addEventListener('click', e => {
-    if (e.target.tagName === 'IMG') {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }, true);
-  ```
+**1. Image/Video Lightbox Trap (HIGHEST PRIORITY)**
+- ANY scroll (scrollIntoView, computer scroll, End key, arrow keys) through image/video areas triggers fullscreen lightbox that PERMANENTLY blocks all interactions
+- `display:none`, `el.remove()`, `pointer-events:none` on images do NOT prevent lightbox. LinkedIn's internal JS still fires.
+- Click prevention JS does NOT help. The trigger is scroll position passing through image area, not clicks.
+- **THE ONLY SOLUTION:** Use `find` tool to get element refs, then `computer left_click ref`. Ref clicks teleport to the element WITHOUT scrolling through content.
+- If lightbox activates: DO NOT try to dismiss. Open a NEW TAB with `tabs_create_mcp` and start fresh.
+- NEVER use screenshots to verify on image/video posts. Use JS verification only.
+- NEVER use `scrollIntoView()` on any LinkedIn post page. Period.
 
 **2. Two Different Editor Types**
 - Search results pages use tiptap/ProseMirror editors
@@ -104,11 +98,21 @@ Parameters:
 
 Generate 3-5 different keyword sets to find diverse posts:
 
-**GDE example:**
-1. `"flutter" OR "dart" OR "mobile SDK"`
-2. `"Google I/O" OR "Gemini API" OR "Android Studio"`
-3. `"developer relations" OR "DevRel" OR "developer advocate"`
-4. `"on-device AI" OR "ML Kit" OR "TensorFlow Lite"`
+**GDE example (PRIORITY ORDER, search in this order):**
+1. `"Flutter GDE" OR "Google Developer Expert" flutter` (finds GDE posts directly, BEST results)
+2. `"flutter" OR "dart" OR "Genkit" OR "Impeller"` with `authorCompany=1441` (Google employees)
+3. `"flutter" OR "dart" OR "mobile SDK"` with `authorCompany=1441` (broader Google search)
+4. `"Google I/O" OR "Gemini API" OR "Flutter"` with `authorCompany=1441`
+
+**AVOID these searches (return irrelevant marketing/business posts):**
+- "AI agents" OR "developer advocate" with Google filter (returns marketing people)
+- "Gemini" alone (returns non-dev Google employees)
+- Generic "devrel" searches (returns Cloud/Marketing people, not Flutter team)
+
+**Search result filtering (HARD RULES):**
+- ONLY engage with: Google engineers on Flutter/Dart team, Flutter/Dart GDEs, Flutter DevRel, Firebase GDEs who also do Flutter
+- SKIP: random Flutter developers, hiring posts, marketing people at Google, Cloud evangelists unrelated to Flutter
+- Goal is GDE nomination, so EVERY engagement must be with someone who could nominate, vouch, or increase visibility with decision makers
 
 **Job at [Company] example:**
 1. `"[company name]" OR "[company product]"`
@@ -221,51 +225,121 @@ Use `get_page_text` to read the complete post. Expand "...see more" if needed.
 7. Developer/professional tone, not corporate
 8. If someone reads all your comments on the same day, NO pattern should be visible
 9. NEVER use GitHub repo path format (owner/repo) like "flutter/flutter", "google/mediapipe", "vercel/next.js". Real humans say "flutter", "mediapipe", "Next.js". Just use the project name, not the GitHub path. This applies to ALL repos everywhere.
+10. **Emojis are MANDATORY** in every comment (at least 1, max 2). 0 emojis = robotic. Vary which emoji. 🔥 😂 😅 💀 are go-to options.
+11. **Hook first.** Start with a reaction, bold claim, or specific observation. NEVER "Great post" or "This is interesting".
+12. **Humor wins.** Self-deprecating dev humor, relatable frustrations. "lost 3 hours tweaking curves lol" type stuff.
+13. **Never formally announce achievements.** "went through the flutter review process and man it's brutal" NOT "I have 3 PRs merged into flutter".
+14. **Across 5 comments: NO pattern visible.** Vary emoji choice, position, comment length, structure, opening, ending. Every comment must feel independently written.
 
-### 4h. Post the Comment
-```javascript
-// Find comment textbox on detail page
-const textbox = document.querySelector('[contenteditable="true"][role="textbox"]');
-textbox.focus();
-textbox.textContent = 'Your comment text here';
-textbox.dispatchEvent(new Event('input', { bubbles: true }));
+### 4h. Post the Comment (PROVEN METHOD, DO NOT DEVIATE)
 
-// Find and click submit button
-const form = textbox.closest('form');
-const submitBtn = form?.querySelector('button[type="submit"]');
-if (submitBtn) submitBtn.click();
+**This is the ONLY method that works. Do NOT try alternatives.**
+
+```
+Step 1: JS click comment button to open editor
+  Array.from(document.querySelectorAll('button')).find(b => 
+    b.getAttribute('aria-label')?.toLowerCase().includes('comment'))?.click()
+
+Step 2: Wait 2 seconds
+
+Step 3: find tool -> query "comment text box editor" -> get ref (e.g. ref_240)
+
+Step 4: computer tool -> left_click ref  (NOT coordinates, NOT scrollIntoView)
+
+Step 5: computer tool -> type "your comment text here"
+
+Step 6: find tool -> query "Comment submit button" -> get ref (e.g. ref_446)
+
+Step 7: computer tool -> left_click ref  (submits the comment)
+
+Step 8: Wait 4 seconds
 ```
 
-### 4i. Wait and Verify
-Wait 3 seconds, then:
+**HARD RULES:**
+- NEVER use `textContent =` or `innerHTML =` on the editor. LinkedIn's ql-editor ignores it.
+- NEVER use clipboard paste on LinkedIn comments. It doesn't work.
+- NEVER use coordinate-based clicks. Use `find` refs only. Refs don't trigger lightbox.
+- NEVER use `scrollIntoView()`. It triggers lightbox on image/video posts.
+- NEVER skip the `find` step. Direct JS querySelector + click on submit buttons is unreliable.
+
+### 4i. Verify Comment (MANDATORY, do NOT skip)
+
 ```javascript
-const verified = document.body.innerText.includes('unique phrase from comment');
-// Also check for user's name in recent comments
+// Check BOTH conditions:
+const editor = document.querySelector('.ql-editor');
+const editorCleared = editor ? editor.innerText.trim().length === 0 : true;
+const commentOnPage = document.body.innerText.includes('unique phrase from comment');
+// BOTH must be true for success
 ```
-Use JS verification, NOT screenshot (faster, more reliable for video/image posts).
+
+If verification fails: 
+- If editor still has text: find submit ref again and click
+- If editor cleared but comment not on page: reload and check again
+- NEVER move to next post until current comment is verified
+
+Then reload and verify again:
+```javascript
+window.onbeforeunload = null;
+window.location.reload();
+// Wait 4 seconds, then check again:
+document.body.innerText.includes('unique phrase')
+```
 
 ### 4j. React to Post
+
 ```javascript
-const likeBtn = document.querySelector('button[aria-label*="Like"]');
+// React BEFORE leaving the post (after comment is verified)
+const likeBtn = Array.from(document.querySelectorAll('button')).find(b => {
+  const label = (b.getAttribute('aria-label') || '').toLowerCase();
+  return label.includes('react') && label.includes('like');
+});
 if (likeBtn) likeBtn.click();
 ```
-VARY reactions across posts: Like, Insightful, Celebrate, Love. Don't always use Like.
+VARY reactions across posts: Like 40%, Insightful 30%, Celebrate 20%, Love 10%.
+For Insightful/Celebrate/Love: hover over like button area, wait 2s for reaction popup, then click specific reaction.
+
+### 4j-extra. Connect with Author (HIGH VALUE TARGETS)
+
+After commenting + reacting, send connection request:
+1. Navigate to author's profile (use extracted URL, NEVER guess)
+2. Click "More" button dropdown on profile
+3. Click "Connect" in dropdown
+4. If "Add a note" dialog appears AND quota available: write personalized note referencing the post you just commented on
+5. If premium upsell appears (quota exhausted): close dialog, re-click More > Connect > "Send without a note"
+6. LinkedIn has MONTHLY limit on personalized invites. Handle gracefully.
+
+**Tab management for navigation:**
+- Use `window.onbeforeunload = null` before navigating away from post pages
+- Better: create new tab with `tabs_create_mcp` for each new post/profile
+- If "Leave site?" dialog blocks: create new tab instead of fighting it
 
 ### 4k. Log Engagement
 Record in memory: author name, role, post topic, comment text, reaction type, date.
 
-## Step 5: Connection Requests (High-Value Targets Only)
+## Step 5: Connection Requests (MANDATORY for GDE/Google targets)
 
-For Tier 1 or Tier 2 contacts:
-1. Navigate to their profile
-2. Click "Connect" button
-3. If "Add a note" option appears, click it
-4. Write personalized note (max 300 chars):
-   - Mention specific shared interest
-   - Reference their post you just commented on
-   - Mention your relevant achievement
-5. Click "Send"
-6. Max 3-5 connection requests per session (LinkedIn limits)
+For ALL Tier 1 and Tier 2 contacts, send connect request AFTER commenting on their post:
+
+1. Create new tab (avoids "Leave site?" dialog from post page)
+2. Navigate to their profile URL (extracted earlier, NEVER guessed)
+3. Click "More" button on profile
+4. Click "Connect" in dropdown menu
+5. If "Add a note to your invitation?" dialog appears:
+   a. Click "Add a note"
+   b. If note editor appears: write personalized note (max 300 chars) referencing the post you just commented on
+   c. If PREMIUM UPSELL appears instead ("Send unlimited personalized invites"): quota is exhausted. Click X to close, then redo More > Connect > "Send without a note"
+6. If no dialog appears (direct connect): done
+
+**Note writing rules (when quota available):**
+- Reference the specific post you just commented on
+- Mention your Flutter framework contributions naturally
+- Keep it casual, not corporate
+- No em dashes
+- Example: "hey! just commented on your Flutter Tour post. been contributing to the flutter framework this year and would love to connect with the GDE community"
+
+**IMPORTANT:** LinkedIn has a MONTHLY quota for personalized notes. When exhausted, always fall back to "Send without a note". A connect without note after commenting on their post is still valuable.
+
+Max 3-5 connection requests per session (LinkedIn limits)
 
 ## Anti-Pattern Detection Rules
 

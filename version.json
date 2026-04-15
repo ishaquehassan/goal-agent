@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
-  "released": "2026-04-11",
-  "changelog": "Naturalness rules now apply to ALL platforms (not just LinkedIn), humor/emoji guidance, repo path ban universal, engagement-writer agent generalized"
+  "version": "1.4.0",
+  "released": "2026-04-15",
+  "changelog": "Complete LinkedIn comment automation rewrite: find+ref click method replaces scrollIntoView (fixes lightbox), mandatory emoji rule, comment quality hard rules, connection request quota handling, search strategy optimization for GDE targets, tab management fixes"
 }

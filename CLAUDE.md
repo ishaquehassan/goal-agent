@@ -160,19 +160,48 @@ const followBtn = Array.from(buttons).find(b =>
 if (followBtn) followBtn.click();
 ```
 
-**Comment posting workflow:**
+**Comment posting workflow (PROVEN METHOD, DO NOT DEVIATE):**
 1. Navigate to post DETAIL page (`/feed/update/urn:li:activity:{id}/`). NEVER comment from search results.
-2. Find comment textbox: `document.querySelector('[contenteditable="true"][role="textbox"]')`
-3. Focus, set content, dispatch input event
-4. Find submit button in form
-5. Wait 3 seconds
-6. Verify via JS: `document.body.innerText.includes('unique phrase')`
+2. JS: Click comment button to open editor: `Array.from(document.querySelectorAll('button')).find(b => b.getAttribute('aria-label')?.toLowerCase().includes('comment'))?.click()`
+3. Wait 2 seconds for editor to appear
+4. Use `find` tool: query "comment text box editor" to get element ref
+5. Use `computer` tool: `left_click` with ref (NOT coordinates, NOT scrollIntoView)
+6. Use `computer` tool: `type` the comment text
+7. Use `find` tool: query "Comment submit button" to get submit ref
+8. Use `computer` tool: `left_click` with submit ref
+9. Wait 4 seconds
+10. JS verify BOTH conditions: `editor.innerText.trim().length === 0` (cleared) AND `document.body.innerText.includes('unique phrase')` (on page)
+11. JS reload: `window.onbeforeunload = null; window.location.reload()`
+12. Wait 4 seconds, verify again with same JS check
+13. ONLY move to next post after reload verification passes
+
+**HARD RULES for comment posting:**
+- NEVER use `scrollIntoView()` on LinkedIn post pages. It triggers lightbox even after removing images.
+- NEVER use `textContent =` or `innerHTML =` on ql-editor. It doesn't register with LinkedIn's internal state.
+- NEVER use clipboard paste (`navigator.clipboard.writeText` + Cmd+V) on LinkedIn comment editors. It doesn't work.
+- NEVER use coordinate-based clicks for editor/submit. Use `find` tool refs instead.
+- NEVER take screenshots to verify comments on image/video posts. Use JS verification only.
+- ALWAYS use the `find` + `ref click` + `computer type` + `find submit` + `ref click` flow. This is the ONLY method that works reliably.
 
 **Image/Video Lightbox Trap (CRITICAL):**
-- Scrolling through image/video areas triggers fullscreen lightbox that BLOCKS all interactions
-- Prevention: `document.addEventListener('click', e => { if (e.target.tagName === 'IMG') { e.stopPropagation(); e.preventDefault(); } }, true);`
-- If stuck: reload the page
-- Use JS verification instead of screenshots for video/image posts
+- ANY scroll action (scrollIntoView, computer scroll, End key) through image/video areas triggers fullscreen lightbox that BLOCKS all interactions
+- `display:none` on images does NOT prevent lightbox (LinkedIn's JS still has internal references)
+- `el.remove()` on images does NOT prevent lightbox (scroll position still passes through removed area)
+- `pointer-events: none` does NOT prevent lightbox
+- THE ONLY SOLUTION: Use `find` tool to get element refs, then `computer left_click ref`. Ref clicks do NOT scroll through content.
+- If lightbox activates: open a NEW TAB (don't try to dismiss or reload same tab, "Leave site?" dialog blocks navigation)
+- Use JS verification instead of screenshots for ALL posts (not just video/image posts)
+
+**"Leave site?" dialog fix:**
+- LinkedIn shows this when editor has unsaved content and you try to navigate away
+- Fix: `window.onbeforeunload = null` before any navigation
+- Better fix: create new tab with `tabs_create_mcp` instead of navigating same tab
+- If dialog blocks: JS `window.onbeforeunload = null; window.location.href = 'URL'`
+
+**Tab management:**
+- Create a new tab for each post engagement (avoids "Leave site?" dialogs)
+- Don't reuse tabs across different posts
+- If stuck on any page, create new tab and move on
 
 **Two editor types:**
 - Search results: tiptap ProseMirror editors
@@ -181,9 +210,32 @@ if (followBtn) followBtn.click();
 
 **@Mentions via JS = FAKE** (just text, no notification). Real mention only by typing @ and selecting from dropdown. Don't attempt.
 
-**Clipboard paste approach (for profile editing, Medium publishing):**
+**Clipboard paste approach (ONLY for Medium publishing and profile editing, NOT for LinkedIn comments):**
 1. JS: `navigator.clipboard.writeText("content")`
 2. Computer tool: keyboard shortcut paste (Cmd+V on Mac, Ctrl+V on Windows)
+3. NOTE: This does NOT work on LinkedIn comment editors (ql-editor). Use `find ref + computer type` instead.
+
+**Connection requests:**
+- Always try "Add a note" first with personalized message
+- LinkedIn has a MONTHLY quota for personalized invites. When exhausted, falls back to "Send without a note"
+- Handle this gracefully: if premium upsell dialog appears after clicking "Add a note", close it and click "Send without a note" via More > Connect
+- For GDE targets: always connect (with or without note), the comment on their post serves as context
+
+**Profile URL safety:**
+- NEVER hardcode or guess profile URLs. Same name can be different person (e.g., /in/craiglabenz/ is a Visual Designer, NOT the Flutter DevRel)
+- ALWAYS extract exact URL from search results or activity pages via JS
+- Verify person's role/title matches before engaging
+
+**Search strategy for finding relevant posts:**
+- `"Flutter GDE" OR "Google Developer Expert" flutter` = finds GDE posts directly
+- `authorCompany=%5B%221441%22%5D` = Google employees only
+- Generic keywords like "AI agents", "developer advocate" return marketing people, not devs. Be specific.
+- Best approach: search for GDEs first, then Google company filter with Flutter/Dart keywords
+
+**Activity URN extraction:**
+- Use `document.querySelectorAll('[data-urn]')` on activity pages. Returns data-urn attributes.
+- `a[href*="/feed/update/"]` selectors do NOT work on activity pages
+- First URN in the list = most recent post
 
 ### Medium Publishing
 
