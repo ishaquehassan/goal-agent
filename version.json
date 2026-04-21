@@ -1,5 +1,5 @@
 {
-  "version": "1.5.1",
-  "released": "2026-04-15",
-  "changelog": "Zero-friction contribute: auto GitHub auth (browser OAuth), SSH key gen+add, fork management, git config from API. Every error auto-recovers. No manual steps ever."
+  "version": "1.6.0",
+  "released": "2026-04-22",
+  "changelog": "Major engagement quality upgrade. Carousel/slide post handling: mandatory ArrowRight-based slide navigation with screenshots before commenting, never guess on quiz posts. Pre-engagement recall protocol: 15-rule mental checklist before every session (first-letter caps, emoji variety, hook-first, interest-before-question, personal experience, no em dashes, no repo paths, carousel slide reading, editor state verification, cross-session variation). Engage skill Step 0 now enforces file recall + mental checklist before any tab opens. Natural content rules expanded with carousel detection, slide navigation technical details, and pre-engagement recall protocol. New comment quality rules: show interest/support before hook question, match post language for replies, professional tone for stranger targets, short praise gets react only, editor state check before typing."
 }

@@ -44,8 +44,8 @@ This is the personal goal tracking workspace for achieving **Flutter Google Deve
 ## Current Progress (Apr 10 2026)
 
 - **Overall: 45%** | Day 3 of 183 | Phase 1 Foundation
-- 3 PRs merged into flutter/flutter (#183081, #183097, #183109)
-- 2 PRs approved, pending merge (#184545, #184569)
+- 4 PRs merged into flutter/flutter (#183081, #183097, #183109, #184572)
+- 1 PR approved, pending merge (#184545 OR #184569, verify)
 - 8 verified speaking events (EXCEEDS 3 requirement)
 - 40 LinkedIn engagements, 7 Google engineers replied (28% rate)
 - 4 Medium articles published
@@ -107,7 +107,7 @@ User confirmed but unverified (no links): WTM Karachi, GDG Live Pakistan, Pakist
 - **3 rounds:** Application form, Community Interview (with active GDE), Product Interview (with Flutter team)
 - **Nomination:** Must be nominated by Google employee OR existing GDE
 - **Requirements:** Community impact through speaking, content, open source, mentoring
-- **Ideal profile:** 10+ speaking events (have 8+), merged PRs in official repos (have 3+5), published articles, community leadership
+- **Ideal profile:** 10+ speaking events (have 8+), merged PRs in official repos (have 4+1), published articles, community leadership
 - **Pakistani landscape:** Only 2 Flutter GDEs (Waleed Arshad, Sakina Abbas). Both know Ishaq from events.
 
 ## Content Strategy
